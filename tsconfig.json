@@ -1,0 +1,29 @@
+{
+  // "include": ["src/**/*"],
+  // "$schema": "https://json.schemastore.org/tsconfig",
+  "compilerOptions": {
+    "target": "ES2015",
+    "lib": [ "ES2015", "ES2017", "DOM" ],
+    "declaration": true,
+    "pretty": true,
+    "rootDir": "src/",
+    // "outDir": "dist",
+    "declarationDir": "./dts",
+    "newLine": "LF",
+    "sourceMap": true,
+    "inlineSources": true,
+    "noUnusedLocals": true,
+    "strict": true,
+    "strictNullChecks": true,
+    "alwaysStrict": true,
+    "baseUrl": ".",
+    "paths": {
+      "types": ["@types"]
+    },
+    "module": "commonjs",
+    "moduleResolution": "node",
+    "esModuleInterop": true,
+    "forceConsistentCasingInFileNames": true,
+  },
+  "exclude": ["node_modules", "dist", "example", "coverage"]
+}
