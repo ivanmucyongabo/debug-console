@@ -3,7 +3,6 @@
 # Generated stuff
 .code
 dist
-lib
 es
 
 ### macOS ###

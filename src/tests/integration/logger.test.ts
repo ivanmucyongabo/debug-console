@@ -152,14 +152,14 @@ describe('LogRegistry tests', () => {
     test('LogRegistry getters', () => {
         const logRegistry = new LogRegistry();
 
-        expect(logRegistry.itemCount).toEqual(0);
+        expect(logRegistry.itemCount).toEqual(1);
     });
 
     test('LogRegistry getLogger method', () => {
         const logRegistry = new LogRegistry();
         const logItem = logRegistry.getLogger('testLogger');
 
-        expect(logRegistry.itemCount).toEqual(1);
+        expect(logRegistry.itemCount).toEqual(2);
         expect(logItem).toBeInstanceOf(LogRegistryItem);
     });
 
@@ -277,7 +277,6 @@ describe('LogBuffer tests', () => {
         const BUFFER_TEST_CAPACITY = 1;
         const logBuffer = new LogBuffer(BUFFER_TEST_CAPACITY);
         const logRecord = logBuffer.add(recordDebug.level, recordDebug.message, recordDebug.name);
-        const clear = jest.fn(logBuffer.clear);
 
         logBuffer.clear();
 

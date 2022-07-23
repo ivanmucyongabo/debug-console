@@ -19,13 +19,13 @@ describe('Console tests', () => {
 
     test('Console open method', () => {
         const el = document.getElementById(elId);
-        const console = new Console(el);
+        const debug_console = new Console(el);
 
-        console.open();
+        debug_console.open();
 
-        const logHeader = document.getElementById(ConsoleStyleDefaults.ids.header);
-        const logBody = document.getElementById(ConsoleStyleDefaults.ids.body);
-        const logFooter = document.getElementById(ConsoleStyleDefaults.ids.footer);
+        const logHeader = document.getElementById(debug_console.ids.header);
+        const logBody = document.getElementById(debug_console.ids.body);
+        const logFooter = document.getElementById(debug_console.ids.footer);
 
         expect(logHeader).not.toBeNull();
         expect(logBody).not.toBeNull();
@@ -34,15 +34,13 @@ describe('Console tests', () => {
 
     test('Console subscribed to logger', () => {
         const el = document.getElementById(elId);
-        const console = new Console(el);
+        const debug_console = new Console(el);
 
-        console.open();
+        debug_console.open();
 
-        const logHeader = document.getElementById(ConsoleStyleDefaults.ids.header);
-        const logBody = document.getElementById(ConsoleStyleDefaults.ids.body);
-        const logFooter = document.getElementById(ConsoleStyleDefaults.ids.footer);
+        const logBody = document.getElementById(debug_console.ids.body);
 
-        subscribe('testLogger', (record: LogRecord) => console.log(record));
+        subscribe('testLogger', (record: LogRecord) => debug_console.log(record));
         debug('testLogger', 'test debug message');
 
         expect(logBody?.hasChildNodes()).toEqual(true);

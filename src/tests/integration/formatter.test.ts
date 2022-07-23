@@ -60,7 +60,7 @@ describe('Formatter tests', () => {
         expect(formatter.showRelativeTime).toBeDefined();
         expect(formatter.showLoggerName).toBeDefined();
         expect(formatter.showSeverityLevel).toBeDefined();
-        expect(formatter.styles).toBeDefined();
+        expect(formatter.css).toBeDefined();
 
         expect(formatter.timer).toBeInstanceOf(Timer);
         expect(typeof formatter.showAbsoluteTime).toEqual('boolean');
@@ -98,14 +98,14 @@ describe('Formatter tests', () => {
         formatter.showRelativeTime = newShowRelativeTime;
         formatter.showLoggerName = newShowLoggerName;
         formatter.showSeverityLevel = newShowSeverityLevel;
-        formatter.styles = newStyles
+        formatter.css = newStyles
 
         expect(formatter.timer.timestamp).toEqual(newTimer.timestamp);
         expect(formatter.showAbsoluteTime).toEqual(newShowAbsoluteTime);
         expect(formatter.showRelativeTime).toEqual(newShowRelativeTime);
         expect(formatter.showLoggerName).toEqual(newShowLoggerName);
         expect(formatter.showSeverityLevel).toEqual(newShowSeverityLevel);
-        expect(formatter.styles.wrapper).toEqual(newStyles.wrapper);
+        expect(formatter.css.wrapper).toEqual(newStyles.wrapper);
 
     });
 
@@ -125,7 +125,7 @@ describe('Formatter tests', () => {
 
         let html = formatter.formatAsHtml(logRecord);
 
-        expect(html).toBeInstanceOf(Array);
+        expect(html).toBeInstanceOf(HTMLElement);
         console.log(html);
     });
 });

@@ -91,17 +91,19 @@ export class Console extends Component {
           return;
       }
 
-      // let scroll = (this.#logEl_.scrollHeight - this.#logEl_.scrollTop - this.#logEl_.clientHeight) <= 100;
+      this.#logEl_ = this.#logEl_ || document.createElement('div');
+
+      let scroll = (this.#logEl_.scrollHeight - this.#logEl_.scrollTop - this.#logEl_.clientHeight) <= 100;
 
       let div = document.createElement('div');
-      // div.classList.add(this.#formatter_.styles.logRecordContainer)
-      div.append(...this.#formatter_.formatAsHtml(logRecord));
+      div.classList.add(this.#formatter_.css.logRecordContainer);
+      div.append(this.#formatter_.formatAsHtml(logRecord));
 
-      // this.#logEl_.appendChild(div);
+      this.#logEl_.appendChild(div);
 
-      // if (scroll) {
-          // this.#logEl_.scrollTop = this.#logEl_.scrollHeight;
-      // }
+      if (scroll) {
+          this.#logEl_.scrollTop = this.#logEl_.scrollHeight;
+      }
   }
 
   open() {
@@ -144,15 +146,25 @@ export class Console extends Component {
       let el = super.html();
 
       let headerEl = document.createElement('header');
-      headerEl.classList.add(...CONSOLE_DEFAULT_STYLES.classes.header);
-      headerEl.setAttribute('id', CONSOLE_DEFAULT_STYLES.ids.header);
+      headerEl.classList.add(...this.classes.header);
+      headerEl.setAttribute('id', this.ids.header);
 
       let logEl = document.createElement('div');
+      logEl.classList.add(...this.classes.body);
+      logEl.setAttribute('id', this.ids.body);
+
       let footerEl = document.createElement('footer');
+      footerEl.classList.add(...this.classes.footer);
+      footerEl.setAttribute('id', this.ids.footer);
 
-      el.append();
-      this.element = el;
+      el.append(
+        headerEl,
+        logEl,
+        footerEl
+      );
 
-      return this.element;
+      this.#logEl_ = logEl;
+
+      return this.element = el;
   }
 }
