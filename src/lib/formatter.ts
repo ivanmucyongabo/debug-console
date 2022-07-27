@@ -28,15 +28,15 @@ export interface FormatterCss {
 export const DEFAULT_CSS: FormatterCss = {
     wrapper: "wrapper",
     container: "cont",
-    info: "dbg-i",
-    error: "dbg-e",
-    warning: "dbg-w",
-    debug: "dbg-d",
+    info: "debug-console-log-record--info",
+    error: "debug-console-log-record--error",
+    warning: "debug-console-log-record--warning",
+    debug: "debug-console-log-record--debug",
     logRecordWrapper: "record",
-    logRecordContainer: "record-cont",
-    logRecordTimestamp: "record-timestamp",
-    logRecordName: "record-name",
-    logRecordLevel: "record-level"
+    logRecordContainer: "debug-console-log-record",
+    logRecordTimestamp: "debug-console-log-record-timestamp",
+    logRecordName: "debug-console-log-record-name",
+    logRecordLevel: "debug-console-log-record-level"
 }; 
 
 export class Formatter {
@@ -101,10 +101,38 @@ export class Formatter {
     }
 
     static getDateTimeStamp(logRecord: LogRecord) {
-
+        var time = new Date(logRecord.timestamp);
+        return `${(time.getFullYear() - 2000)}` +
+            `${(time.getMonth() + 1)}` +
+            `${time.getDate()}` + ' ' +
+            `${time.getHours()}` + ':' +
+            `${time.getMinutes()}` +
+            ':' +
+            `${time.getSeconds()}` +
+            '.' +
+            `${Math.floor(time.getMilliseconds() / 10)}`;
     }
     static getRelativeTime(logRecord: LogRecord, timestamp: number) {
+        let ms = logRecord.timestamp - timestamp;
+        let sec = ms / 1000;
+        let str = sec.toFixed(3);
+      
+        let spacesToPrepend = 0;
 
+        if (sec < 1) {
+          spacesToPrepend = 2;
+        } else {
+          while (sec < 100) {
+            spacesToPrepend++;
+            sec *= 10;
+          }
+        }
+
+        while (spacesToPrepend-- > 0) {
+          str = ' ' + str;
+        }
+
+        return str;
     }
 
     format(logRecord: LogRecord): string {
@@ -114,7 +142,7 @@ export class Formatter {
         if (!logRecord) {
             return document.createElement('div');
         }
-    
+
         var className;
         switch (logRecord.level) {
             case LogLevel.Error:
@@ -156,14 +184,14 @@ export class Formatter {
         var fullPrefixHtml = htmlEscape(sb.join(''));
 
         let logRecordHtml = htmlEscape(logRecord.message);
-        let recordHtml = document.createElement('span')
-        recordHtml.classList.add(className);
+        let recordHtml = document.createElement('span');
         recordHtml.append(logRecordHtml);
     
         // Combine both pieces of HTML and, if needed, append a final newline.
         var html;
-        html = document.createElement('span')
+        html = document.createElement('div')
         html.append(fullPrefixHtml, recordHtml, document.createElement('br'));
+        html.classList.add(this.css.logRecordContainer, className);
 
         return html;
     }

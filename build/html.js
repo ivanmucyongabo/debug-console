@@ -46,7 +46,7 @@ function htmlTemplate(externals) {
     links = links
       .map(({ fileName }) => {
         const attrs = makeHtmlAttributes(attributes.link);
-        return `<link src="${publicPath}${fileName}" rel="stylesheet"${attrs}>`;
+        return `<link href="${publicPath}${fileName}" rel="stylesheet"${attrs}>`;
       })
       .join('\n');
 
@@ -68,7 +68,10 @@ function htmlTemplate(externals) {
     <body>
       ${scripts}
       <header></header>
-      <main id="app-main"></main>
+      <main id="app-main">
+      <div>${testBtns}</div>
+      <div id="target"></div>
+      </main>
       <footer></footer>
       ${testScript}
     </body>
@@ -76,17 +79,34 @@ function htmlTemplate(externals) {
   };
 }
 
+const testBtns = ['error', 'info', 'debug', 'warning']
+.map((type) => `<button role="button" type="button" id="${type}-btn" value="${type} logged">log ${type}</button>`)
+.join('');
+
+const testListeners = ['error', 'info', 'debug', 'warning']
+.map((type) => `
+let ${type}Btn = document.getElementById("${type}-btn");
+${type}Btn.addEventListener("click", (e) => ${type}("testLogger", e.target.value + counter++))
+`)
+.join('');
+
 const testScript = `
 <script>
+var counter = 0;
 var debug = DebugUI.debug;
 var info = DebugUI.info;
 var warning = DebugUI.warning;
 var error = DebugUI.error;
 var subscribe = DebugUI.subscribe;
-var debugConsole = DebugUI.Console(document.getElementById('app-main'));
+var debugConsole = new DebugUI.DebugConsole({
+  mountTo: document.getElementById('target')
+});
 
 debugConsole.open()
+
+subscribe('testLogger', (record) => debugConsole.log(record));
+${testListeners}
 </script>
 `;
 
-module.exports = htmlTemplate
+module.exports = htmlTemplate;

@@ -2,222 +2,184 @@
  * @fileoverview Simple toolbar component.
  */
 
-import { AccordianPanel, AccordianPanelCssConfig, AccordianTrigger, AccordianTriggerCssConfig } from './accordian';
-import { CssIds, CssClasses, CssConfig, Component, IComponent } from './base';
-import { Button } from './button';
-import { ComboBox } from './combobox';
-import { Counter } from './counter';
+import union from 'lodash.union';
+import { Accordian, IAccordian, IAccordianConfig } from './accordian';
+import { Component, IComponent, IComponentConfig } from './base';
+import { Button, IButton, IButtonConfig } from './button';
+import { ComboBox, IComboBox, IComboBoxConfig } from './combobox';
+import { Counter, ICounter, ICounterConfig } from './counter';
 
-interface ToolBarCssIds extends CssIds {
-    [index: string]: string;
+const DEFAULT_SEPERATOR = '-';
 
-    container: string,
-    combobox: string,
-    select: string,
-    btn: string,
+export interface IToolBarItemConfig {
+    toolbar?: ToolBar
+}
+export interface IToolBarComboBoxConfig extends IComboBoxConfig, IToolBarItemConfig {}
+export interface IToolBarAccordianConfig extends IAccordianConfig, IToolBarItemConfig {}
+export interface IToolBarCounterConfig extends ICounterConfig, IToolBarItemConfig {}
+export interface IToolBarButtonConfig extends IButtonConfig, IToolBarItemConfig {}
+
+export class ToolBarComboBox extends ComboBox implements IComboBox {
+    #parent_?: ToolBar;
+    constructor(config: IToolBarComboBoxConfig) {
+        super(config)
+        this.#parent_ = config.toolbar;
+    }
+    set parent(parent: ToolBar) {
+        this.#parent_ = parent;
+    }
+    renderAsHTML(): HTMLElement {
+        let html = super.renderAsHTML();
+
+        if (this.#parent_) {
+            html.classList.add(...[`${this.#parent_.name}-item`, `${this.#parent_.name}-${this.name}`]);
+        }
+        return html;
+    }
+}
+export class ToolBarAccordian extends Accordian implements IAccordian {
+    #parent_?: ToolBar;
+    constructor(config: IToolBarAccordianConfig) {
+        config.classNames = union(config.classNames || [], [])
+        super(config)
+        this.#parent_ = config.toolbar;
+    }
+    set parent(parent: ToolBar) {
+        this.#parent_ = parent;
+    }
+    renderAsHTML(): HTMLElement {
+        let html = super.renderAsHTML();
+
+        if (this.#parent_) {
+            html.classList.add(...[`${this.#parent_.name}-item`, `${this.#parent_.name}-${this.name}`]);
+        }
+        return html;
+    }
+}
+export class ToolBarCounter extends Counter implements ICounter {
+    #parent_?: ToolBar;
+    constructor(config: IToolBarCounterConfig) {
+        config.classNames = union(config.classNames || [], []);
+        super(config)
+        this.#parent_ = config.toolbar;
+    }
+    set parent(parent: ToolBar) {
+        this.#parent_ = parent;
+    }
+    renderAsHTML(): HTMLElement {
+        let html = super.renderAsHTML();
+
+        if (this.#parent_) {
+            html.classList.add(...[`${this.#parent_.name}-item`, `${this.#parent_.name}-${this.name}`]);
+        }
+        return html;
+    }
+}
+export class ToolBarButton extends Button implements IButton {
+    #parent_?: ToolBar;
+    constructor(config: IToolBarButtonConfig) {
+        config.classNames = union(config.classNames || [], []);
+        super(config)
+        this.#parent_ = config.toolbar;
+    }
+    set parent(parent: ToolBar) {
+        this.#parent_ = parent;
+    }
+    renderAsHTML(): HTMLElement {
+        let html = super.renderAsHTML();
+
+        if (this.#parent_) {
+            html.classList.add(...[`${this.#parent_.name}-item`, `${this.#parent_.name}-${this.name}`]);
+        }
+        return html;
+    }
 }
 
-interface ToolBarCssClasses extends CssClasses {
-    [index: string]: string[];
+export type ToolBarItem = ToolBarComboBox|ToolBarAccordian|ToolBarCounter|ToolBarButton;
 
-    container: string[],
-    combobox: string[],
-    select: string[],
-    btn: string[],
-}
-
-interface ToolBarCssConfig extends CssConfig {
-    ids : ToolBarCssIds,
-    classes : ToolBarCssClasses
-}
-
-export const TOOLBAR_DEFAULT_CSS: ToolBarCssConfig = {
-    ids: {
-        container: 'toolbar',
-        combobox: 'toolbar-combobox',
-        select: 'toolbar-select',
-        btn: 'toolbar-btn',
+export interface IToolBarConfig extends IComponentConfig {
+    itemClassNames?: string[],
+    items?: {
+        [key: string]: ToolBarItem[]
     },
-    classes: {
-        container: ['toolbar'],
-        combobox: ['toolbar-combobox'],
-        select: ['toolbar-select'],
-        btn: ['toolbar-btn'],
-    }
-};
-
-export class ToolBarComboButton extends ComboBox {
-    constructor() {
-        super(...arguments)
-    }
-
-    html(): HTMLElement {
-        let inner = super.html();
-        let wrapper = document.createElement('div');
-        wrapper.append(inner);
-
-        return this.element = inner;
-    }
-}
-export class ToolBarAccordianTrigger extends AccordianTrigger {
-    constructor(...args: (string | AccordianTriggerCssConfig | undefined)[]) {
-        super(...args)
-    }
-
-    html(): HTMLElement {
-        let inner = super.html();
-        let wrapper = document.createElement('div');
-        wrapper.append(inner);
-
-        return this.element = inner;
-    }
-}
-export class ToolBarAccordian {
-    trigger: ToolBarAccordianTrigger;
-    panel: AccordianPanel;
-
-    constructor(root?: string, css?: {trigger?: AccordianTriggerCssConfig, panel?: AccordianPanelCssConfig}) {
-        this.trigger = new ToolBarAccordianTrigger(css?.trigger, root);
-        this.panel = new AccordianPanel(css?.panel, root);
-    }
-}
-export class ToolBarCounter extends Counter {
-    constructor() {
-        super(...arguments)
-    }
-
-    html(): HTMLElement {
-        let inner = super.html();
-        let wrapper = document.createElement('div');
-        wrapper.append(inner);
-
-        return this.element = inner;
-    }
-}
-export class ToolBarButton extends Button {
-    constructor() {
-        super(...arguments)
-    }
-
-    html(): HTMLElement {
-        let inner = super.html();
-        let wrapper = document.createElement('div');
-        wrapper.append(inner);
-
-        return this.element = inner;
-    }
+    groupClassNames?: string[]
 }
 
-export class ToolBarGroup {
-    #items_: (ToolBarButton|ToolBarCounter|ToolBarComboButton|ToolBarAccordian)[];
-
-    constructor() {
-        this.#items_ = [];
-    }
-
-    get items() {
-        return this.#items_;
-    }
-
-    insert(item: ToolBarButton|ToolBarCounter|ToolBarComboButton|ToolBarAccordian) {
-        this.#items_.push(item);
-    }
-    remove() {}
-}
-
-export interface IToolBar extends IComponent {
-    get groups(): {[index: string]: ToolBarGroup};
-    insert(key: string, item: ToolBarButton|ToolBarCounter|ToolBarComboButton|ToolBarAccordian): boolean;
-    remove(key: string): boolean;
-}
+export interface IToolBar extends IComponent {}
 
 export class ToolBar extends Component implements IToolBar {
-    #wrapperEl_: HTMLElement | null;
-    #groups_: {
-        [index: string]: ToolBarGroup
+    name:string = 'toolbar';
+    #itemClassNames_: string[];
+    #groupClassNames_: string[]
+    #items_: {
+        [key: string]: ToolBarItem[]
     };
 
-    constructor(css?: ToolBarCssConfig | {}, root?: string) {
-        css = css || {};
-        super({ ...css, ...TOOLBAR_DEFAULT_CSS}, root)
-        this.#wrapperEl_ = null;
-        this.#groups_ = {};
+    constructor(config: IToolBarConfig) {
+        super(config)
+        this.#items_ = config.items || {};
+        this.#itemClassNames_ = union(config.itemClassNames || [], [`${this.name}${DEFAULT_SEPERATOR}item`]);
+        this.#groupClassNames_ = union(config.groupClassNames || [], [`${this.name}-group`, 'group']);
+        this.classNames = union(this.classNames, [this.name]);
+
+        for(let i=0, groups=Object.values(this.#items_), group; group=groups[i]; i++) {
+            for(let j=0, items=group, item; item=items[j]; j++) {
+                item.parent = this;
+            }
+        }
     }
 
-    get groups() {
-        return this.#groups_;
-    }
-
-    insert(key: string, item: ToolBarButton|ToolBarCounter|ToolBarComboButton|ToolBarAccordian) {
+    insert(group: string, item: ToolBarItem): boolean {
         let initialInsert = false;
 
-        if (!this.#groups_[key]) {
+        if (!this.#items_[group]) {
             initialInsert = true;
-            this.#groups_[key] = new ToolBarGroup();
+            this.#items_[group] = [];
         }
 
-        this.#groups_[key].insert(item);
+        if (!item.parent || item.parent !== this) {
+            item.parent = this;
+        }
+
+        this.#items_[group].push(item);
 
         return initialInsert;
     }
 
-    remove(key: string): boolean {
-        let existsAndRemoved = false;
+    groupHTML(name: string): HTMLElement {
+        let groupEl = document.createElement('div');
+        groupEl.classList.add(...this.#groupClassNames_);
 
-        if (this.#groups_[key]) {
-            this.#groups_[key].remove();
-            existsAndRemoved = true;
+        return groupEl;
+    }
+
+    renderAsHTML(): HTMLElement {
+        let html = super.renderAsHTML();
+        let itemsCopy = this.#items_;
+
+        for(let i=0, groups=Object.keys(itemsCopy), group; group=groups[i]; i++) {
+            let groupHTML = this.groupHTML(group);
+
+            for(let j=0, items=itemsCopy[group], item; item=items[j]; j++) {
+                let itemEl = item.renderAsHTML();
+                itemEl.classList.add(...this.#itemClassNames_);
+                groupHTML.append(itemEl)
+            }
+            
+            html.append(groupHTML);
         }
 
-        return existsAndRemoved;
+        return html;
     }
 
     html(): HTMLElement {
-        let groups = this.#groups_;
-        let toolbarEl = super.html();
-        let toolbarWrapperEl = document.createElement('div');
-        let toolbarAccordiansGroupEl = document.createElement('div');
+        let html = super.html();
+        html.setAttribute('role', 'toolbar');
 
-        for (const prop in groups) {
-            let group = groups[prop];
-            let groupEl = this.#groupHtml_(prop);
-            for (let i=0, items=group.items, item; item=items[i]; i++) {
-                if (item instanceof ToolBarAccordian) {
-                    groupEl.append(item.trigger.renderAsHtml());
-                    toolbarAccordiansGroupEl.append(item.panel.renderAsHtml())
-                }
-                else {
-                    groupEl.append(item.renderAsHtml());
-                }
-            }
-            toolbarEl.append(groupEl);
-        }
-
-        toolbarWrapperEl.append(
-            toolbarEl,
-            toolbarAccordiansGroupEl
-        );
-
-        this.#wrapperEl_ = toolbarWrapperEl;
-        this.element = toolbarEl;
-
-        return this.element;
+        return html;
     }
 
-    setAriaLabel(label: string) {
-        this.element?.setAttribute('aria-label', label);
-    }
-    setAriaControls(controls: string) {
-        this.element?.setAttribute('aria-controls', controls);
-    }
-    setRole(role: string) {
-        this.element?.setAttribute('role', role);
-    }
-
-    #groupHtml_(group: string): HTMLElement {
-        let groupEl = document.createElement('div');
-        groupEl.classList.add('group', group);
-
-        return groupEl;
+    attachListeners() {
+        super.attachListeners()
     }
 }

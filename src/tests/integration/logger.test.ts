@@ -25,8 +25,8 @@ const recordError = {
     timestamp: undefined
 };
 
-describe('LogRecord tests', () => {
-    test('LogRecord constructor', () => {
+describe('LogRecord', () => {
+    test('constructor', () => {
         const logRecord = new LogRecord(
             recordDebug.level,
             recordDebug.message,
@@ -37,7 +37,7 @@ describe('LogRecord tests', () => {
         expect(logRecord).toBeInstanceOf(LogRecord);
     });
 
-    test('LogRecord getters', () => {
+    test('getters', () => {
         const logRecord = new LogRecord(
             recordDebug.level,
             recordDebug.message,
@@ -50,7 +50,7 @@ describe('LogRecord tests', () => {
         expect(typeof logRecord.timestamp).toEqual('number');
     });
 
-    test('LogRecord reset method', () => {
+    test('reset', () => {
         const logRecord = new LogRecord(
             recordDebug.level,
             recordDebug.message,
@@ -72,7 +72,7 @@ describe('LogRecord tests', () => {
     });
 });
 
-describe('Logger tests', () => {
+describe('Logger', () => {
     test('Logger constructor', () => {
         const logger = new Logger('testLogger');
 
@@ -87,15 +87,15 @@ describe('Logger tests', () => {
     });
 });
 
-describe('LogRegistryItem tests', () => {
-    test('LogRegistryItem constructor', () => {
+describe('LogRegistryItem', () => {
+    test('constructor', () => {
         const logItem = new LogRegistryItem('test');
 
         expect(logItem).toBeDefined();
         expect(logItem).toBeInstanceOf(LogRegistryItem);
     });
 
-    test('LogRegistryItem getters', () => {
+    test('getters', () => {
         const logItem = new LogRegistryItem('test');
 
         expect(logItem.logger).toBeInstanceOf(Logger);
@@ -103,14 +103,14 @@ describe('LogRegistryItem tests', () => {
         expect(logItem.level).toEqual(LogLevel.Debug);
     });
 
-    test('LogRegistryItem setters', () => {
+    test('setters', () => {
         const logItem = new LogRegistryItem('test');
         logItem.level = recordError.level;
 
         expect(logItem.level).toEqual(recordError.level);
     });
 
-    test('LogRegistryItem observer pattern methods', () => {
+    test('observer-pattern', () => {
         const logItem = new LogRegistryItem('test');
         const logRecord = new LogRecord(
             recordDebug.level,
@@ -141,21 +141,21 @@ describe('LogRegistryItem tests', () => {
     });
 });
 
-describe('LogRegistry tests', () => {
-    test('LogRegistry constructor', () => {
+describe('LogRegistry', () => {
+    test('constructor', () => {
         const logRegistry = new LogRegistry();
 
         expect(logRegistry).toBeDefined();
         expect(logRegistry).toBeInstanceOf(LogRegistry);
     });
 
-    test('LogRegistry getters', () => {
+    test('getters', () => {
         const logRegistry = new LogRegistry();
 
         expect(logRegistry.itemCount).toEqual(1);
     });
 
-    test('LogRegistry getLogger method', () => {
+    test('getLogger', () => {
         const logRegistry = new LogRegistry();
         const logItem = logRegistry.getLogger('testLogger');
 
@@ -163,7 +163,7 @@ describe('LogRegistry tests', () => {
         expect(logItem).toBeInstanceOf(LogRegistryItem);
     });
 
-    test('LogRegistry getLoggers method', () => {
+    test('getLoggers', () => {
         const logRegistry = new LogRegistry();
         const logItem = logRegistry.getLogger('testLogger');
         const logItems = logRegistry.getLoggers();
@@ -174,15 +174,15 @@ describe('LogRegistry tests', () => {
     });
 });
 
-describe('LogBuffer tests', () => {
-    test('LogBuffer constructor w/o capacity', () => {
+describe('LogBuffer', () => {
+    test('constructor w/o capacity', () => {
         const logBuffer = new LogBuffer();
 
         expect(logBuffer).toBeDefined();
         expect(logBuffer).toBeInstanceOf(LogBuffer);
     });
 
-    test('LogBuffer constructor w/ capacity', () => {
+    test('constructor w/ capacity', () => {
         const BUFFER_TEST_CAPACITY = 1;
         const logBuffer = new LogBuffer(BUFFER_TEST_CAPACITY);
 
@@ -190,7 +190,7 @@ describe('LogBuffer tests', () => {
         expect(logBuffer).toBeInstanceOf(LogBuffer);
     });
 
-    test('LogBuffer getters w/o capacity', () => {
+    test('getters w/o capacity', () => {
         const logBuffer = new LogBuffer();
 
         expect(logBuffer.buffer).toBeInstanceOf(Array);
@@ -204,7 +204,7 @@ describe('LogBuffer tests', () => {
         expect(logBuffer.isFull).toEqual(false);
     });
 
-    test('LogBuffer getters w/ capacity', () => {
+    test('getters w/ capacity', () => {
         const BUFFER_TEST_CAPACITY = 1;
         const logBuffer = new LogBuffer(BUFFER_TEST_CAPACITY);
 
@@ -221,7 +221,7 @@ describe('LogBuffer tests', () => {
         expect(logBuffer.isBufferingEnabled).toEqual(true);
     });
 
-    test('LogBuffer add method w/o capacity', () => {
+    test('add w/o capacity', () => {
         const logBuffer = new LogBuffer();
         const logRecord = logBuffer.add(recordDebug.level, recordDebug.message, recordDebug.name);
 
@@ -233,7 +233,7 @@ describe('LogBuffer tests', () => {
         expect(logBuffer.isBufferingEnabled).toEqual(false);
     });
 
-    test('LogBuffer add method w/ capacity', () => {
+    test('add w/ capacity', () => {
         const BUFFER_TEST_CAPACITY = 1;
         const logBuffer = new LogBuffer(BUFFER_TEST_CAPACITY);
 
@@ -247,7 +247,7 @@ describe('LogBuffer tests', () => {
         expect(logBuffer.isBufferingEnabled).toEqual(true);
     });
 
-    test('LogBuffer forEach method w/o capacity', () => {
+    test('forEach w/o capacity', () => {
         const logBuffer = new LogBuffer();
         let counter = 0;
         const test_fn = (record: LogRecord) => {
@@ -259,7 +259,7 @@ describe('LogBuffer tests', () => {
         expect(counter).toEqual(0);
     });
 
-    test('LogBuffer forEach method w/ capacity', () => {
+    test('forEach w/ capacity', () => {
         const BUFFER_TEST_CAPACITY = 1;
         const logBuffer = new LogBuffer(BUFFER_TEST_CAPACITY);
         const logRecord = logBuffer.add(recordDebug.level, recordDebug.message, recordDebug.name);
@@ -273,7 +273,7 @@ describe('LogBuffer tests', () => {
         expect(counter).toEqual(1);
     });
 
-    test('LogBuffer clear method', () => {
+    test('clear', () => {
         const BUFFER_TEST_CAPACITY = 1;
         const logBuffer = new LogBuffer(BUFFER_TEST_CAPACITY);
         const logRecord = logBuffer.add(recordDebug.level, recordDebug.message, recordDebug.name);

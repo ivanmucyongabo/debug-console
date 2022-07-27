@@ -1,0 +1,38 @@
+.debug-console-header {
+    position:relative;
+    overflow: hidden;
+}
+
+.debug-console-logger {
+    position:relative;
+    padding: 0;
+}
+
+.debug-console-footer {
+    position:relative;
+}
+
+.debug-console-log-record {
+    padding: 6px 12px;
+    font: 14px;
+}
+
+.debug-console-log-record.debug-console-log-record--error {
+    background-color: #ffebee;
+    color: #ff3d00;
+}
+
+.debug-console-log-record.debug-console-log-record--info {
+    background-color: #e1f5fe;
+    color: #2962ff;
+}
+
+.debug-console-log-record.debug-console-log-record--warning {
+    background-color: #ffecb3;
+    color: #212121;
+}
+
+.debug-console-log-record.debug-console-log-record--debug {
+    background-color: #f8f9fa;
+    color:#212121;
+}

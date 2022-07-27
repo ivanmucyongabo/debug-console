@@ -1,20 +1,20 @@
 /* Toolbar */
 [role="toolbar"] {
-  border: 2px solid transparent;
-  border-radius: 5px;
-  padding: 6px;
-  height: 40px;
-  background-color: #ececea;
+  min-height: 40px;
+  background: none;
+  border-width: 0!important;
+  display: inline;
+  padding: 0;
+  margin-bottom: 0;
+  outline: 0;
+  border-top: 1px solid #e5e5e5;
+  border-bottom: 1px solid #ebebeb;  
 }
 
 [role="toolbar"].focus {
-  border-color: #005a9c;
-  border-width: 3px;
-  padding: 5px;
 }
 
 [role="toolbar"] .group {
-  padding: 0.25em;
   display: block;
   float: left;
 }
@@ -23,35 +23,73 @@
   margin-left: 0.75em;
 }
 
-[role="toolbar"] button[aria-pressed="true"],
-[role="toolbar"] [role="radio"][aria-checked="true"] {
-  border: 1px solid rgb(255 255 255);
+[role="toolbar"] button,
+[role="toolbar"] [role="radio"],
+[role="toolbar"] label,
+[role="toolbar"] .combobox,
+[role="toolbar"] a,
+[role="toolbar"] .toolbar-item,
+[role="toolbar"] .input {
   outline: none;
   display: inline-block;
-  padding: 6px 12px;
-  border-radius: 5px;
   text-align: center;
-  background: rgb(255 255 255);
-  color: #222428;
   font-size: 14px;
   line-height: 1.5em;
   margin-right: 0.25em;
 }
 
+[role="toolbar"] button .popup-label {
+  display: block;
+  width: initial;
+  position: absolute;
+  top: -30000em;
+  font-weight: normal;
+}
+
+[role="toolbar"] button .popup-label.show {
+  text-align: center;
+  top: -2.5em;
+}
+
+[role="toolbar"] button .popup-label::after,
+[role="toolbar"] button .popup-label::before {
+  top: 100%;
+  left: 50%;
+  border: solid transparent;
+  content: " ";
+  height: 0;
+  width: 0;
+  position: absolute;
+  pointer-events: none;
+}
+
+[role="toolbar"] button .popup-label::after {
+  border-width: 10px;
+  margin-left: -10px;
+}
+
+[role="toolbar"] button .popup-label::before {
+  border-width: 12px;
+  margin-left: -12px;
+}
+
+[role="toolbar"] button svg {
+  margin: 0.15em auto -0.15em;
+  height: 1em;
+  width: 1em;
+  pointer-events: none;
+}
+
 [role="toolbar"] button[aria-disabled="true"] {
-  border-color: #555;
   font-weight: bold;
-  background-color: #f4f4f4;
 
 }
 
 [role="toolbar"] button[aria-disabled="true"] {
-  color: #889;
   cursor: not-allowed;
 }
 
 [role="toolbar"] button[aria-disabled="true"]:focus {
-  border-color: #005a9c;
 }
 
 [role="toolbar"] button::-moz-focus-inner {
@@ -62,16 +100,15 @@
 [role="toolbar"] [role="radio"]:focus,
 [role="toolbar"] .focus,
 [role="toolbar"] a:focus {
-  border-width: 2px;
-  border-color: #005a9c;
-  background: rgb(226 239 255);
-  padding: 5px 11px;
 }
 
 [role="toolbar"] button:hover,
 [role="toolbar"] [role="radio"]:hover,
 [role="toolbar"] label.input:hover,
 [role="toolbar"] a:hover {
-  border-color: #005a9c;
-  background: rgb(226 239 255);
+}
+
+[role="toolbar"] button[aria-pressed="true"],
+[role="toolbar"] [role="radio"][aria-checked="true"] {
+  font-weight: bold;
 }

@@ -2,7 +2,7 @@ import { Timer } from "../../lib/timer";
 import { LogRecord, LogLevel } from "../../lib/logger";
 import formatter, { Formatter } from "../../lib/formatter";
 
-describe('Utility function tests', () => {
+describe('utilites', () => {
     test('escapeWhitespace', () => {
         const test1 = 'a&#160;b';
         const test2 = 'a &#160;b';
@@ -44,15 +44,15 @@ describe('Utility function tests', () => {
     });
 });
 
-describe('Formatter tests', () => {
-    test('Formatter constructor', () => {
+describe('formatter', () => {
+    test('constructor', () => {
         const formatter = new Formatter();
 
         expect(formatter).toBeDefined();
         expect(formatter).toBeInstanceOf(Formatter);
     });
 
-    test('Formatter getters', () => {
+    test('getters', () => {
         const formatter = new Formatter();
 
         expect(formatter.timer).toBeDefined();
@@ -69,7 +69,7 @@ describe('Formatter tests', () => {
         expect(typeof formatter.showSeverityLevel).toEqual('boolean');
     });
 
-    test('Formatter setters', () => {
+    test('setters', () => {
         const formatter = new Formatter();
 
         const newTimer = new Timer();
@@ -109,23 +109,21 @@ describe('Formatter tests', () => {
 
     });
 
-    test('Formatter create log record string', () => {
+    test('formatAsString', () => {
         const formatter = new Formatter();
         const logRecord = new LogRecord(LogLevel.Debug, 'test log message', 'testLogger');
 
         let str = formatter.format(logRecord);
 
         expect(typeof str).toEqual('string');
-        console.log(str);
     });
 
-    test('Formatter create log record html', () => {
+    test('formatAsHTML', () => {
         const formatter = new Formatter();
         const logRecord = new LogRecord(LogLevel.Debug, 'test log message', 'testLogger');
 
         let html = formatter.formatAsHtml(logRecord);
 
         expect(html).toBeInstanceOf(HTMLElement);
-        console.log(html);
     });
 });

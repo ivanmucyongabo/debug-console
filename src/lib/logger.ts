@@ -181,16 +181,20 @@ export class LogBuffer {
     add(level: LogLevel, msg: string, name: string): LogRecord {
         if (!this.#isBufferingEnabled) {
             return new LogRecord(level, msg, name);
-          }
-          const currIndex = (this.#currIndex + 1) % this.#capacity;
-          this.#currIndex = currIndex;
-          if (this.#isFull) {
+        }
+
+        const currIndex = (this.#currIndex + 1) % this.#capacity;
+        this.#currIndex = currIndex;
+
+        if (this.#isFull) {
             const ret = this.#buffer[currIndex];
             ret.reset(level, msg, name);
             return ret;
-          }
-          this.#isFull = currIndex == this.#capacity - 1;
-          return this.#buffer[currIndex] = new LogRecord(level, msg, name);
+        }
+
+        this.#isFull = currIndex == this.#capacity - 1;
+        return this.#buffer[currIndex] = new LogRecord(level, msg, name);
+
     }
     forEach(fn: (record: LogRecord) => void) {
         const buffer = this.#buffer;

@@ -3,30 +3,27 @@
  */
 
 import './css/accordian.css';
-import './css/button.css';
 import './css/combobox.css';
 import './css/console.css';
 import './css/counter.css';
 import './css/toolbar.css';
 
 import { LogBuffer, Logger, LogLevel, LogRecord, LogRegistry, LogRegistryItem } from "./lib/logger";
-import { AccordianPanel, AccordianTrigger } from './components/accordian';
+import { Accordian } from './components/accordian';
 import { Button } from './components/button';
 import { ComboBox } from './components/combobox';
 import { Counter } from './components/counter';
-import { Console, CONSOLE_DEFAULT_STYLES } from './components/console';
+import { DebugConsole } from './components/console';
 import {
   ToolBar,
-  ToolBarGroup,
   ToolBarButton,
   ToolBarCounter,
   ToolBarAccordian,
-  ToolBarAccordianTrigger,
-  ToolBarComboButton
+  ToolBarComboBox
 } from './components/toolbar';
 
 export const logRegistry = new LogRegistry();
-export const logBuffer = new LogBuffer(5000);
+export const logBuffer = new LogBuffer();
 
 const getLogger = (name: string, level?: LogLevel): LogRegistryItem => {
     return logRegistry.getLogger(name, level);
@@ -104,17 +101,13 @@ export {
   debug,
   warning,
   ToolBar,
-  ToolBarGroup,
   ToolBarButton,
   ToolBarCounter,
   ToolBarAccordian,
-  ToolBarAccordianTrigger,
-  ToolBarComboButton,
-  AccordianPanel,
-  AccordianTrigger,
+  ToolBarComboBox,
+  Accordian,
   Button,
   ComboBox,
   Counter,
-  Console,
-  CONSOLE_DEFAULT_STYLES as ConsoleStyleDefaults
+  DebugConsole,
 };

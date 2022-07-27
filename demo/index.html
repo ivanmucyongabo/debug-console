@@ -1,0 +1,48 @@
+
+  <!doctype html>
+  <html lang="en">
+    <head>
+      <meta charset="utf-8">
+      <title>Debug Console Demo</title>
+      <link href="index.css" rel="stylesheet">
+    </head>
+    <body>
+      <script src="index.js"></script>
+      <header></header>
+      <main id="app-main">
+      <div><button role="button" type="button" id="error-btn" value="error logged">log error</button><button role="button" type="button" id="info-btn" value="info logged">log info</button><button role="button" type="button" id="debug-btn" value="debug logged">log debug</button><button role="button" type="button" id="warning-btn" value="warning logged">log warning</button></div>
+      <div id="target"></div>
+      </main>
+      <footer></footer>
+      
+<script>
+var counter = 0;
+var debug = DebugUI.debug;
+var info = DebugUI.info;
+var warning = DebugUI.warning;
+var error = DebugUI.error;
+var subscribe = DebugUI.subscribe;
+var debugConsole = new DebugUI.DebugConsole({
+  mountTo: document.getElementById('target')
+});
+
+debugConsole.open()
+
+subscribe('testLogger', (record) => debugConsole.log(record));
+
+let errorBtn = document.getElementById("error-btn");
+errorBtn.addEventListener("click", (e) => error("testLogger", e.target.value + counter++))
+
+let infoBtn = document.getElementById("info-btn");
+infoBtn.addEventListener("click", (e) => info("testLogger", e.target.value + counter++))
+
+let debugBtn = document.getElementById("debug-btn");
+debugBtn.addEventListener("click", (e) => debug("testLogger", e.target.value + counter++))
+
+let warningBtn = document.getElementById("warning-btn");
+warningBtn.addEventListener("click", (e) => warning("testLogger", e.target.value + counter++))
+
+</script>
+
+    </body>
+  </html>

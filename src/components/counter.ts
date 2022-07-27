@@ -2,63 +2,73 @@
  * @fileoverview Simple counter component.
  */
 
-import { CssIds, CssClasses, CssConfig, Component, IComponent } from './base';
+import { IComponentConfig, Component, IComponent } from './base';
+import union from 'lodash.union';
 
-interface CounterCssIds extends CssIds {
-    [index: string]: string;
+const DEFAULT_SEPERATOR = '-';
+const DEFAULT_TAGNAME = 'div';
 
-    label: string,
-    count: string,
+export interface ICounterConfig extends IComponentConfig {
+    label: string;
+    min?: number;
+    max?: number;
+    countClassNames?: string[];
+    countId?: string;
 }
-
-interface CounterCssClasses extends CssClasses {
-    [index: string]: string[];
-
-    label: string[],
-    count: string[],
-}
-
-interface CounterCssConfig extends CssConfig {
-    ids : CounterCssIds,
-    classes : CounterCssClasses
-}
-
-export const COUNTER_DEFAULT_CSS: CounterCssConfig = {
-    ids: {
-        label: 'counter-label',
-        count: 'counter-count',
-    },
-    classes: {
-        label: ['counter-label'],
-        count: ['counter-count'],
-    }
-};
 
 export interface ICounter extends IComponent {}
 
 export class Counter extends Component implements ICounter {
+    name:string = 'counter';
+    #countClassNames_: string[];
+    #countId_: string;
+    #label_: string;
+
     #count_: number;
 
-    constructor(css?: CounterCssConfig | {}) {
-        css = css || {};
-        super({ ...css, ...COUNTER_DEFAULT_CSS})
-
+    constructor(config: ICounterConfig) {
+        config.tagName = config.tagName || DEFAULT_TAGNAME;
+        super(config);
         this.#count_ = 0;
-        this.tagName = 'span';
+
+        this.#label_ = config.label;
+        this.#countId_ = config.countId || `${this.name}${DEFAULT_SEPERATOR}${'count'.concat(this.id)}`;
+        this.#countClassNames_ = union(config.countClassNames||[], [`${this.name}${DEFAULT_SEPERATOR}count`]);
+        this.classNames = union(this.classNames, [this.name]);
     }
 
     get count() {
         return this.#count_;
     }
-    set count(increment: number) {
-        let oldCount = this.#count_;
-        this.#count_ = oldCount + increment;
+    set count(count: number) {
+        this.#count_ = count;
         this.setCount(this.#count_);
     }
 
     setCount(count: number) {
-        if (this.element) {
-            this.element.innerText = count.toString();
+        let el = this.element;
+        if (el) {
+            let countEl = document.getElementById(`${this.#countId_}`);
+            countEl!.innerText = count.toString();
         }
+    }
+    
+
+    increment(delta: number) {
+        let oldCount = this.#count_;
+        this.count = oldCount + delta;
+    }
+
+    renderAsHTML(): HTMLElement {
+        let html = super.renderAsHTML();
+
+        let count = document.createElement('span');
+        count.classList.add(...this.#countClassNames_);
+        count.setAttribute('id', this.#countId_)
+        count.innerText = this.#count_.toString();
+
+        html.append(this.#label_, count);
+
+        return html;
     }
 }

@@ -4,6 +4,7 @@
 .code
 dist
 es
+demo
 
 ### macOS ###
 *.DS_Store

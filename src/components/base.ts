@@ -4,99 +4,57 @@
 
 import uniqueId from 'lodash.uniqueid';
 import camelCase from 'lodash.camelcase';
+import union from 'lodash.union';
 
-export interface CssIds {
-    [index: string]: string;
-}
+const DEFAULT_TAG_NAME = 'div';
 
-export interface CssClasses {
-    [index: string]: string[];
-}
-
-export interface CssConfig {
+export interface IComponentConfig {
+    id?: string,
     classNames?: string[],
-    ids : CssIds,
-    classes : CssClasses
+    tagName?: string
 }
 
-export interface IComponent  {
-    render(root?: string): HTMLElement;
-    renderAsString(root?: string): string;
-    renderAsHtml(root?: string): HTMLElement;
+export interface IComponent {
+    id: string;
+    classNames: string[];
+    tagName: string;
+    element: HTMLElement | null;
+    render(): HTMLElement;
+    renderAsString(): string;
+    renderAsHTML(): HTMLElement;
     html(): HTMLElement;
-    clearHtml(el: HTMLElement): HTMLElement;
     attachListeners(): void;
-    customizeCss(prepend?: string, seperator?: string, append?: string): void;
-    customizeCssIds(prepend?: string, seperator?: string): void;
-    customizeCssClassNames(prepend?: string, seperator?: string): void;
-    customizeCssChildrenClasses(prepend?: string, seperator?: string, append?: string): void;
-    get uuid(): string;
-    get id(): string;
-    get className(): string;
-    get classNames(): string[];
-    get element(): HTMLElement | null;
-    get ids(): {[index: string]: string;};
-    get classes(): {[index: string]: string[];};
-    set uuid(uuid: string);
-    set id(id: string);
-    set element(el: HTMLElement | null);
 }
 
 export class Component implements IComponent {
+    name:string = 'debugUI';
     #uuid_: string;
     #id_: string;
-    #className_: string;
     #classNames_: string[];
-    #ids_: {
-        [index: string]: string;
-    };
-    #classes_: {
-        [index: string]: string[];
-    };
     #tagName_: string;
     #element_: HTMLElement | null;
 
-    constructor(css: CssConfig, root?: string) {
+    constructor(config: IComponentConfig) {
         this.#uuid_ = uniqueId();
-        this.#id_ = uniqueId(camelCase(this.constructor.name));
-        this.#className_ = camelCase(this.constructor.name);
-        this.#classNames_ = css.classNames || [this.#className_];
+        this.#id_ = config.id || (camelCase(this.constructor.name) + this.#uuid_);
+        this.#tagName_ = config.tagName || DEFAULT_TAG_NAME;
         this.#element_ = null;
-        this.#ids_ = { ...css.ids };
-        this.#classes_ = { ...css.classes };
-        this.#tagName_ = 'div';
-        this.customizeCss(root);
-    }
-
-    get uuid() {
-        return this.#uuid_;
-    }
-    set uuid(uuid: string) {
-        this.#uuid_ = uuid;
+        this.#classNames_ = union(config.classNames || [], [this.name]);
     }
 
     get id() {
         return this.#id_;
     }
-    set id(id: string) {
-        this.#id_ = id;
-    }
-
-    get className() {
-        return this.#className_;
-    }
-
     get classNames() {
         return this.#classNames_;
+    }
+    set classNames(classes: string[]) {
+        this.#classNames_ = classes;
     }
 
     get tagName() {
         return this.#tagName_;
     }
-    set tagName(tag: string) {
-        this.#tagName_ = tag;
-    }
-
     get element() {
         return this.#element_;
     }
@@ -104,58 +62,18 @@ export class Component implements IComponent {
         this.#element_ = el;
     }
 
-    get ids() {
-        return this.#ids_;
-    }
-
-    get classes() {
-        return this.#classes_;
-    }
-
-    customizeCss(prepend?: string, seperator?: string, append?: string): void {
-        this.customizeCssIds(prepend, seperator);
-        this.customizeCssClassNames(prepend, seperator);
-        this.customizeCssChildrenClasses(prepend, seperator, append);
-    }
-    customizeCssIds(prepend?: string, seperator?: string): void {
-        prepend = prepend || this.#id_;
-        seperator = seperator || '-';
-        let oldCss = this.#ids_;
-
-        for (const prop in oldCss) {
-            this.#ids_[prop] = [prepend, oldCss[prop]].join(seperator);
-        }
-    }
-    customizeCssClassNames(prepend?: string, seperator?: string): void {
-        prepend = prepend || '';
-        seperator = seperator || '-';
-
-        this.#classNames_.unshift([prepend, this.#className_].join(seperator));
-    }
-    customizeCssChildrenClasses(prepend?: string, seperator?: string, append?: string): void {
-        prepend = prepend || this.#className_;
-        seperator = seperator || '-';
-        append = append || '';
-        let oldCss = this.#classes_;
-
-        for (const prop in oldCss) {
-            oldCss[prop].unshift([prepend, prop, append].join(seperator));
-            this.#classes_[prop] = oldCss[prop];
-        }
-    }
-
-    render(root?: string): HTMLElement {
-        let html = this.renderAsHtml(root);
+    render(): HTMLElement {
+        let html = this.renderAsHTML();
         this.attachListeners();
 
         return html;
     }
-    renderAsString(root?: string): string {
-        let html = this.renderAsHtml(root);
+    renderAsString(): string {
+        let html = this.renderAsHTML();
 
         return html.outerHTML;
     }
-    renderAsHtml(root?: string): HTMLElement {
+    renderAsHTML(): HTMLElement {
         return this.html();
     }
 
@@ -168,15 +86,8 @@ export class Component implements IComponent {
             el.setAttribute('id', this.#id_);
             el.classList.add(...this.#classNames_);
 
-            return el;
-        }
+            return this.element = el;
+        }        
     }
-    clearHtml(el: HTMLElement): HTMLElement {
-        // el.innerHTML = "";
-        while (el.firstChild) el.removeChild(el.firstChild);
-
-        return el;
-    }
-
     attachListeners() {}
 }

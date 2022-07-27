@@ -1,44 +1,44 @@
-import { Console, ConsoleStyleDefaults, subscribe, debug } from "../..";
+import { DebugConsole, subscribe, debug } from "../..";
 import { LogRecord } from '../../lib/logger';
 
 const elId = 'test-body';
 const elCont = `<div id="${elId}"></div>`.toString();
 
-describe('Console tests', () => {
+describe('debug-console', () => {
     beforeEach(() => {
         document.body.innerHTML = elCont;
     });
 
-    test('Console constructor', () => {
+    test('constructor', () => {
         const el = document.getElementById(elId);
-        const console = new Console(el);
+        const console = new DebugConsole({mountTo: el});
 
         expect(console).toBeDefined();
-        expect(console).toBeInstanceOf(Console);
+        expect(console).toBeInstanceOf(DebugConsole);
     });
 
-    test('Console open method', () => {
+    test('open method', () => {
         const el = document.getElementById(elId);
-        const debug_console = new Console(el);
+        const debug_console = new DebugConsole({mountTo: el});
 
         debug_console.open();
 
-        const logHeader = document.getElementById(debug_console.ids.header);
-        const logBody = document.getElementById(debug_console.ids.body);
-        const logFooter = document.getElementById(debug_console.ids.footer);
+        const logHeader = document.getElementById(debug_console.headerId);
+        const logBody = document.getElementById(debug_console.logId);
+        const logFooter = document.getElementById(debug_console.footerId);
 
         expect(logHeader).not.toBeNull();
         expect(logBody).not.toBeNull();
         expect(logFooter).not.toBeNull();
     });
 
-    test('Console subscribed to logger', () => {
+    test('observer-pattern', () => {
         const el = document.getElementById(elId);
-        const debug_console = new Console(el);
+        const debug_console = new DebugConsole({mountTo: el});
 
         debug_console.open();
 
-        const logBody = document.getElementById(debug_console.ids.body);
+        const logBody = document.getElementById(debug_console.logId);
 
         subscribe('testLogger', (record: LogRecord) => debug_console.log(record));
         debug('testLogger', 'test debug message');
@@ -49,7 +49,7 @@ describe('Console tests', () => {
     });
 });
 
-describe('Global tests', () => {
+describe('api', () => {
     beforeEach(() => {
         document.body.innerHTML = elCont;
     });

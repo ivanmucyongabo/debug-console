@@ -1,0 +1,280 @@
+/* Accordian */
+.accordion-trigger {
+  background: none;
+  color: hsl(0deg 0% 13%);
+  display: block;
+  font-size: 1rem;
+  font-weight: normal;
+  margin: 0;
+  padding: 1em 1.5em;
+  position: relative;
+  text-align: left;
+  width: 100%;
+  outline: none;
+}
+
+.accordion-panel {
+  margin: 0;
+  padding: 1em 1.5em;
+}
+
+.combobox-list {
+  position: relative;
+}
+
+.combobox .group {
+  display: inline-flex;
+  padding: 4px;
+  cursor: pointer;
+}
+
+.combobox input,
+.combobox button {
+  background-color: white;
+  color: black;
+  box-sizing: border-box;
+  height: 24px;
+  padding: 0;
+  margin: 0;
+  vertical-align: bottom;
+  border: 1px solid gray;
+  position: relative;
+  cursor: pointer;
+}
+
+.combobox input {
+  width: 150px;
+  border-right: none;
+  outline: none;
+  font-size: 87.5%;
+  padding: 1px 3px;
+}
+
+.combobox button {
+  border-left: none;
+  outline: none;
+  color: rgb(0 90 156);
+}
+
+.combobox button[aria-expanded="true"] svg {
+  transform: rotate(180deg) translate(0, -3px);
+}
+
+ul[role="listbox"] {
+  margin: 0;
+  padding: 0;
+  position: absolute;
+  left: 4px;
+  top: 28px;
+  list-style: none;
+  background-color: white;
+  display: none;
+  box-sizing: border-box;
+  border: 2px currentcolor solid;
+  max-height: 250px;
+  width: 168px;
+  overflow: scroll;
+  overflow-x: hidden;
+  font-size: 87.5%;
+  cursor: pointer;
+}
+
+ul[role="listbox"] li[role="option"] {
+  margin: 0;
+  display: block;
+  padding-left: 3px;
+  padding-top: 2px;
+  padding-bottom: 2px;
+}
+
+.debug-console-header {
+    position:relative;
+    overflow: hidden;
+}
+
+.debug-console-logger {
+    position:relative;
+    padding: 0;
+}
+
+.debug-console-footer {
+    position:relative;
+}
+
+.debug-console-log-record {
+    padding: 6px 12px;
+    font: 14px;
+}
+
+.debug-console-log-record.debug-console-log-record--error {
+    background-color: #ffebee;
+    color: #ff3d00;
+}
+
+.debug-console-log-record.debug-console-log-record--info {
+    background-color: #e1f5fe;
+    color: #2962ff;
+}
+
+.debug-console-log-record.debug-console-log-record--warning {
+    background-color: #ffecb3;
+    color: #212121;
+}
+
+.debug-console-log-record.debug-console-log-record--debug {
+    background-color: #f8f9fa;
+    color:#212121;
+}
+.counter {
+    min-width: 2.1em;
+    font-size: 0.6rem;
+    text-align: center;
+    background: #f8f9fa;
+    color: #212121;
+    padding: 1px 6px;
+    margin: 0rem;
+    border: 1px outset #212121;
+    border-radius: 2px;
+}
+
+.counter .counter-count {
+    margin-left: 0.25em;
+}
+
+.counter.counter--debug {
+    background: #f8f9fa;
+    color: #212121;
+}
+
+.counter.counter--info {
+    background: #039be5;
+    color: #fefefe;
+}
+
+.counter.counter--warning {
+    background: #fbc02d;
+    color: #0a0a0a;
+}
+
+.counter.counter--error {
+    background: #c62828;
+    color: #fefefe;
+}
+
+.counter .counter-count {
+    font-style: bold;
+}
+/* Toolbar */
+[role="toolbar"] {
+  min-height: 40px;
+  background: none;
+  border-width: 0!important;
+  display: inline;
+  padding: 0;
+  margin-bottom: 0;
+  outline: 0;
+  border-top: 1px solid #e5e5e5;
+  border-bottom: 1px solid #ebebeb;  
+}
+
+[role="toolbar"].focus {
+}
+
+[role="toolbar"] .group {
+  display: block;
+  float: left;
+}
+
+[role="toolbar"] .group:not(:first-child) {
+  margin-left: 0.75em;
+}
+
+[role="toolbar"] button,
+[role="toolbar"] [role="radio"],
+[role="toolbar"] label,
+[role="toolbar"] .combobox,
+[role="toolbar"] a,
+[role="toolbar"] .toolbar-item,
+[role="toolbar"] .input {
+  outline: none;
+  display: inline-block;
+  text-align: center;
+  font-size: 14px;
+  line-height: 1.5em;
+  margin-right: 0.25em;
+}
+
+[role="toolbar"] button .popup-label {
+  display: block;
+  width: initial;
+  position: absolute;
+  top: -30000em;
+  font-weight: normal;
+}
+
+[role="toolbar"] button .popup-label.show {
+  text-align: center;
+  top: -2.5em;
+}
+
+[role="toolbar"] button .popup-label::after,
+[role="toolbar"] button .popup-label::before {
+  top: 100%;
+  left: 50%;
+  border: solid transparent;
+  content: " ";
+  height: 0;
+  width: 0;
+  position: absolute;
+  pointer-events: none;
+}
+
+[role="toolbar"] button .popup-label::after {
+  border-width: 10px;
+  margin-left: -10px;
+}
+
+[role="toolbar"] button .popup-label::before {
+  border-width: 12px;
+  margin-left: -12px;
+}
+
+[role="toolbar"] button svg {
+  margin: 0.15em auto -0.15em;
+  height: 1em;
+  width: 1em;
+  pointer-events: none;
+}
+
+[role="toolbar"] button[aria-disabled="true"] {
+  font-weight: bold;
+
+}
+
+[role="toolbar"] button[aria-disabled="true"] {
+  cursor: not-allowed;
+}
+
+[role="toolbar"] button[aria-disabled="true"]:focus {
+}
+
+[role="toolbar"] button::-moz-focus-inner {
+  border: 0;
+}
+
+[role="toolbar"] button:focus,
+[role="toolbar"] [role="radio"]:focus,
+[role="toolbar"] .focus,
+[role="toolbar"] a:focus {
+}
+
+[role="toolbar"] button:hover,
+[role="toolbar"] [role="radio"]:hover,
+[role="toolbar"] label.input:hover,
+[role="toolbar"] a:hover {
+}
+
+[role="toolbar"] button[aria-pressed="true"],
+[role="toolbar"] [role="radio"][aria-checked="true"] {
+  font-weight: bold;
+}

@@ -2,149 +2,66 @@
  * @fileoverview Simple combobox component.
  */
 
-import { CssIds, CssClasses, CssConfig, Component, IComponent } from './base';
+import { Component, IComponent, IComponentConfig } from './base';
+import union from 'lodash.union';
 
-interface ComboBoxCssIds extends CssIds {
-    container: string,
-    combobox: string,
-    input: string,
-    btn: string,
-    listbox: string,
-    listboxItem: string
+const DEFAULT_SEPERATOR = '-';
+
+export interface IComboBoxConfig extends IComponentConfig {
+    inputId?: string;
+    inputClasses?: string[];
+    btnId?: string;
+    btnClasses?: string[];
+    listBoxId?: string;
+    listBoxClasses?: string[];
+    listBoxItemClassNames?: string[];
+    wrapperClassNames?: string[],
+    containerClassNames?: string[],
+    options: string[];
 }
 
-interface ComboBoxCssClasses extends CssClasses {
-    container: string[],
-    combobox: string[],
-    input: string[],
-    btn: string[],
-    listbox: string[],
-    listboxItem: string[]
-}
+export interface IComboBox extends IComponent {}
 
-interface ComboBoxCssConfig extends CssConfig {
-    ids : ComboBoxCssIds,
-    classes : ComboBoxCssClasses
-}
+export class ComboBox extends Component implements IComboBox {
+    name:string = 'combobox';
+    #inputId_: string;
+    #inputClassNames_: string[];
+    #btnId_: string;
+    #btnClassNames_: string[];
+    #listBoxId_: string;
+    #listBoxClassNames_: string[];
+    #listBoxItemClassNames_: string[];
+    #containerClassNames_: string[];
 
-export const COMBOBOX_DEFAULT_CSS: ComboBoxCssConfig = {
-    ids: {
-        container: 'combobox',
-        combobox: 'combobox-group',
-        input: 'combobox-input',
-        btn: 'combobox-button',
-        listbox: 'combobox-listbox',
-        listboxItem: 'combobox-listbox-item'
-    },
-    classes: {
-        container: ['combobox', 'combobox-list'],
-        combobox: ['combobox-group'],
-        input: ['combobox-input'],
-        btn: ['combobox-btn'],
-        listbox: ['combobox-listbox'],
-        listboxItem: ['combobox-listbox-item']
-    }
-};
-
-export interface IComboBox extends IComponent {
-    open(): void;
-    close(): void;
-    toggle(open: boolean): void;
-    get options(): string[];
-    set options(options: string[]);
-    get filter(): string;
-    set filter(filter: string);
-    get input(): HTMLElement | null;
-    get btn(): HTMLElement | null;
-    get listbox(): HTMLElement | null;
-    get option(): string;
-    get firstOption(): string;
-    get lastOption(): string;
-}
-
-export class ComboBox extends Component implements IComboBox{
-    #input_: HTMLElement | null;
-    #btn_: HTMLElement | null;
-    #listbox_: HTMLElement | null;
-
-    #allOptions_: string[];
+    #options_: string[];
     #option_: string;
     #firstOption_: string;
     #lastOption_: string;
 
     #filteredOptions_: string[];
     #filter_: string;
+    
+    constructor(config: IComboBoxConfig) {
+        super(config)
 
-    constructor(options: string[] = [], css?: ComboBoxCssConfig | {}, root?: string) {
-        css = css || {};
-        super({ ...css, ...COMBOBOX_DEFAULT_CSS}, root);
-
-        this.#input_ =  null;
-        this.#btn_ = null;
-        this.#listbox_ = null;
-
-        this.#allOptions_ = options;
-        this.#filteredOptions_ = [];
+        this.#options_ = config.options;
         this.#option_ = '';
         this.#firstOption_ = '';
         this.#lastOption_ = '';
+    
+        this.#filteredOptions_ = [];
         this.#filter_ = '';
-    }
 
-    get options() {
-        return this.#allOptions_;
-    }
-    set options(options: string[]) {
-        this.#allOptions_ = options;
-    }
+        this.#inputId_ =  config.inputId || `${this.name}${DEFAULT_SEPERATOR}${'input'.concat(this.id)}`;
+        this.#btnId_ =  config.btnId || `${this.name}${DEFAULT_SEPERATOR}${'btn'.concat(this.id)}`;
+        this.#listBoxId_ =  config.listBoxId || `${this.name}${DEFAULT_SEPERATOR}${'listbox'.concat(this.id)}`;
 
-    get filter() {
-        return this.#filter_;
-    }
-    set filter(filter: string) {
-        this.#filter_ = filter;
-    }
-
-    get input() {
-        return this.#input_;
-    }
-
-    get btn() {
-        return this.#btn_;
-    }
-
-    get listbox() {
-        return this.#listbox_;
-    }
-
-    get option() {
-        return this.#option_;
-    }
-
-    get firstOption() {
-        return this.#firstOption_;
-    }
-
-    get lastOption() {
-        return this.#lastOption_;
-    }
-
-    attachListeners() {
-        this.#input_ = document.getElementById(this.ids.input);
-        this.#btn_ = document.getElementById(this.ids.btn);
-        this.#listbox_ = document.getElementById(this.ids.listbox);
-
-        this.#input_?.addEventListener('keydown', (e: KeyboardEvent) => this.#handleInputKeydown(e));
-        this.#input_?.addEventListener('keyup', (e: KeyboardEvent) => this.#handleInputKeyup(e));
-        this.#input_?.addEventListener('click', (e: MouseEvent) => this.#handleInputClick(e));
-        this.#input_?.addEventListener('focus', (e: Event) => this.#handleInputFocus(e));
-        this.#input_?.addEventListener('blur', (e: Event) => this.#handleInputBlur(e));
-
-        this.#btn_?.addEventListener('click', (e: MouseEvent) => this.#handleBtnClick(e));
-
-        this.#listbox_?.addEventListener('click', (e: MouseEvent) => this.#handleLListboxClick(e));
-
-        super.attachListeners();
+        this.#inputClassNames_ = union(config.inputClasses || [], [`${this.name}${DEFAULT_SEPERATOR}input`]);
+        this.#btnClassNames_ = union(config.btnClasses || [], [`${this.name}${DEFAULT_SEPERATOR}button`]);
+        this.#listBoxClassNames_ = union(config.listBoxClasses || [], [`${this.name}${DEFAULT_SEPERATOR}listbox`]);
+        this.#listBoxItemClassNames_ = union(config.listBoxItemClassNames || [], [`${this.name}${DEFAULT_SEPERATOR}listbox${DEFAULT_SEPERATOR}item`]);
+        this.#containerClassNames_ = union(config.containerClassNames || [], [`${this.name}${DEFAULT_SEPERATOR}group`]);
+        this.classNames = union(config.wrapperClassNames || [], this.classNames, [this.name, `${this.name}${DEFAULT_SEPERATOR}list`]);
     }
 
     open() {
@@ -154,86 +71,53 @@ export class ComboBox extends Component implements IComboBox{
         this.toggle(false);
     }
     toggle(open: boolean) {
-        if (this.#listbox_) {
-            let dispaly = open ? 'block' : 'hidden'
-            let expanded = open.toString();
-
-            this.#listbox_.style.display = dispaly;
-            this.#input_?.setAttribute('aria-expanded', expanded);
-            this.#btn_?.setAttribute('aria-expanded', expanded);
-        }
     }
 
-    #handleInputKeydown(e: KeyboardEvent): void {
+    renderAsHTML(): HTMLElement {
+        let html = super.renderAsHTML();
+
+        let cont = document.createElement('div');
+        cont.classList.add(...this.#containerClassNames_);
+        cont.append(this.inputHTML(), this.btnHTML(), this.listboxHTML());
+
+        html.append(cont);
+
+        return html;
     }
-    #handleInputKeyup(e: KeyboardEvent): void {
-    }
-    #handleInputClick(e: MouseEvent): void {}
-    #handleInputFocus(e: Event): void {}
-    #handleInputBlur(e: Event): void {}
-
-    #handleBtnClick(e: MouseEvent): void {}
-
-    #handleLListboxClick(e: MouseEvent): void {}
-
-    html(): HTMLElement {
-        let group = document.createElement('div');
-        group.append(
-            this.#inputHtml_(),
-            this.#btnHtml_()
-        );
-
-        let combobox = document.createElement('div');
-        combobox.setAttribute('id', this.ids.combobox);
-        combobox.classList.add(...this.classes.combobox);
-        combobox.append(
-            group,
-            this.#listboxHtml_()
-        );
-
-        this.element = super.html();
-        this.element.append(combobox);
-
-        return this.element;
-    }
-    #inputHtml_(): HTMLElement {
-        let input = document.createElement('input');
-        input.setAttribute('id', this.ids.input);
-        input.classList.add(...this.classes.input);
-
-        return this.#input_ = input;
-    }
-    #btnHtml_(): HTMLElement {
+    btnHTML(): HTMLElement {
         let btn = document.createElement('button');
-        btn.setAttribute('id', this.ids.btn);
-        btn.classList.add(...this.classes.btn);
+        btn.setAttribute('id', this.#btnId_);
+        btn.classList.add(...this.#btnClassNames_);
+        btn.setAttribute('value', 'level');
+        btn.innerText = 'levels';
 
-        return this.#btn_ = btn;
+        return btn;
     }
-    #listboxHtml_(): HTMLElement {
-        let listbox = this.#listbox_ || document.createElement('ul');
+    inputHTML() {
+        let input = document.createElement('input');
+        input.setAttribute('id', this.#inputId_);
+        input.setAttribute('type', 'text');
+        input.classList.add(...this.#inputClassNames_);
 
-        // Initial run to create listbox
-        if (!this.#listbox_) {
-            listbox.setAttribute('id', this.ids.listbox);
-            listbox.classList.add(...this.classes.listbox);
-        }
-
-        if (listbox.childElementCount > 0) {
-            listbox = this.clearHtml(listbox);
-        }
-
-        for (let i = 0, options: string[] = this.#allOptions_, option: string; option = options[i]; i++) {
-            listbox.append(this.#listboxOptionHtml_(option, i));
-        }
-
-        return this.#listbox_ = listbox;
+        return input;
     }
-    #listboxOptionHtml_(option: string, index: number): HTMLElement {
-        let listboxOption = document.createElement('li');
-        listboxOption.setAttribute('id', [this.ids.listboxItem, index].join('-'));
-        listboxOption.classList.add(...this.classes.listboxItem);
+    listboxHTML() {
+        let listbox = document.createElement('ul');
+        listbox.setAttribute('id', this.#listBoxId_);
+        listbox.setAttribute('type', 'text');
+        listbox.setAttribute('role', 'listbox');
+        listbox.classList.add(...this.#listBoxClassNames_);
 
-        return listboxOption;
+        for(let i=0, options=this.#options_, option; option=options[i]; i++) {
+            listbox.append(this.optHTML(option))
+        }
+
+        return listbox;
+    }
+    optHTML(opt: string): HTMLElement {
+        let option = document.createElement('li');
+        option.innerText = opt;
+
+        return option;
     }
 }
