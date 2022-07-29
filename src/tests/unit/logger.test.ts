@@ -12,12 +12,6 @@ const recordInfo = {
     message: "info test message",
     timestamp: undefined
 };
-const recordWarning = {
-    level: LogLevel.Warning,
-    name: "warningLogger",
-    message: "warning test message",
-    timestamp: undefined
-};
 const recordError = {
     level: LogLevel.Error,
     name: "errorLogger",
@@ -165,7 +159,6 @@ describe('LogRegistry', () => {
 
     test('getLoggers', () => {
         const logRegistry = new LogRegistry();
-        const logItem = logRegistry.getLogger('testLogger');
         const logItems = logRegistry.getLoggers();
 
         expect(logItems).toBeInstanceOf(Array);
@@ -262,7 +255,7 @@ describe('LogBuffer', () => {
     test('forEach w/ capacity', () => {
         const BUFFER_TEST_CAPACITY = 1;
         const logBuffer = new LogBuffer(BUFFER_TEST_CAPACITY);
-        const logRecord = logBuffer.add(recordDebug.level, recordDebug.message, recordDebug.name);
+        logBuffer.add(recordDebug.level, recordDebug.message, recordDebug.name);
         let counter = 0;
         const test_fn = (record: LogRecord) => {
             counter++;
@@ -276,7 +269,7 @@ describe('LogBuffer', () => {
     test('clear', () => {
         const BUFFER_TEST_CAPACITY = 1;
         const logBuffer = new LogBuffer(BUFFER_TEST_CAPACITY);
-        const logRecord = logBuffer.add(recordDebug.level, recordDebug.message, recordDebug.name);
+        logBuffer.add(recordDebug.level, recordDebug.message, recordDebug.name);
 
         logBuffer.clear();
 

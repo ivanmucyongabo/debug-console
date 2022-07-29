@@ -2,7 +2,7 @@ import { Counter } from "../../../src/components/counter";
 
 const elId = 'test-body';
 const elCont = `<div id="${elId}"></div>`.toString();
-const DEFAULT_TAG_NAME = 'span';
+const DEFAULT_TAG_NAME = 'div';
 let counter1: Counter;
 let counter2: Counter;
 
@@ -31,12 +31,12 @@ describe('counter', () => {
 
         expect(counter1.tagName).toBe(DEFAULT_TAG_NAME);
         expect(counter1.classNames).toContain('debugUI');
-        expect(counter1.classNames.length).toBe(1);
+        expect(counter1.classNames.length).toBe(2);
 
         expect(counter2.tagName).toBe('div');
         expect(counter2.classNames).toContain('testClass');
         expect(counter2.classNames).toContain('debugUI');
-        expect(counter2.classNames.length).toBe(2);
+        expect(counter2.classNames.length).toBe(3);
     });
 
     test('html', () => {

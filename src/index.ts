@@ -8,6 +8,7 @@ import './css/console.css';
 import './css/counter.css';
 import './css/toolbar.css';
 
+import { Formatter } from './lib/formatter';
 import { LogBuffer, Logger, LogLevel, LogRecord, LogRegistry, LogRegistryItem } from "./lib/logger";
 import { Accordian } from './components/accordian';
 import { Button } from './components/button';
@@ -100,14 +101,15 @@ export {
   error,
   debug,
   warning,
-  ToolBar,
-  ToolBarButton,
-  ToolBarCounter,
-  ToolBarAccordian,
-  ToolBarComboBox,
   Accordian,
   Button,
   ComboBox,
   Counter,
   DebugConsole,
+  Formatter,
+  ToolBar,
+  ToolBarAccordian,
+  ToolBarButton,
+  ToolBarComboBox,
+  ToolBarCounter,
 };

@@ -2,10 +2,10 @@
     "extends": "./tsconfig.json",
     "compilerOptions": {
       "declaration": false,
-      "sourceMap": true,
-      "removeComments": true,
+      "sourceMap": false,
+      "removeComments": false,
       "inlineSourceMap": false,
-      "inlineSources": true
+      "inlineSources": false
     },
     "exclude": [
       "**/__*__",

@@ -14,7 +14,23 @@
 
 .debug-console-log-record {
     padding: 6px 12px;
-    font: 14px;
+    font: 8px;
+}
+
+.debug-console-log-record-timestamp {
+    margin-right: 0.25em;
+}
+
+.debug-console-log-record-name {
+    margin-right: 0.25em;
+    font-weight: 500;
+}
+
+.debug-console-log-record-level {
+    margin-right: 0.25em;
+}
+
+.debug-console-log-record-message {
 }
 
 .debug-console-log-record.debug-console-log-record--error {

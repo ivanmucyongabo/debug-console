@@ -31,12 +31,12 @@ describe('button', () => {
 
         expect(button1.tagName).toBe(DEFAULT_TAG_NAME);
         expect(button1.classNames).toContain('debugUI');
-        expect(button1.classNames.length).toBe(1);
+        expect(button1.classNames.length).toBe(2);
 
         expect(button2.tagName).toBe('div');
         expect(button2.classNames).toContain('testClass');
         expect(button2.classNames).toContain('debugUI');
-        expect(button2.classNames.length).toBe(2);
+        expect(button2.classNames.length).toBe(3);
     });
 
     test('html', () => {

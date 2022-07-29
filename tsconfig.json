@@ -4,10 +4,8 @@
   "compilerOptions": {
     "target": "ES2015",
     "lib": [ "ES2015", "ES2017", "DOM" ],
-    "declaration": true,
     "pretty": true,
     "rootDir": "src/",
-    "declarationDir": "./dts",
     "newLine": "LF",
     "sourceMap": true,
     "inlineSources": true,
@@ -24,5 +22,5 @@
     "esModuleInterop": true,
     "forceConsistentCasingInFileNames": true,
   },
-  "exclude": ["node_modules", "dist", "example", "coverage"]
+  "exclude": ["node_modules", "dist", "example", "coverage", "build"]
 }

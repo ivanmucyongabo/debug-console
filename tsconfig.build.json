@@ -1,10 +1,12 @@
 {
   "extends": "./tsconfig.json",
   "compilerOptions": {
-    "sourceMap": false,
+    "sourceMap": true,
     "removeComments": true,
     "inlineSourceMap": false,
-    "inlineSources": false
+    "inlineSources": false,
+    "declaration": true,
+    "declarationDir": "./dts",
   },
   "exclude": [
     "**/__*__",

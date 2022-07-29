@@ -19,7 +19,7 @@ export interface IDebugConsoleComponentConfig extends IComponentConfig {
   footerClassNames?: string[];
   headerId?: string;
   logId?: string;
-  footerId?: string;  
+  footerId?: string;
 }
 
 export interface IDebugConsole extends IComponent {
@@ -76,18 +76,23 @@ export class DebugConsole extends Component implements IDebugConsole {
   get headerId(): string {
     return this.#headerId_;
   }
+
   get logId(): string {
     return this.#logId_;
   }
+
   get footerId(): string {
     return this.#footerId_;
   }
+
   get headerClassNames(): string[] {
     return this.#headerClassNames_;
   }
+
   get logClassNames(): string[] {
     return this.#logClassNames_;
   }
+
   get footerClassNames(): string[] {
     return this.#footerClassNames_;
   }
@@ -108,8 +113,11 @@ export class DebugConsole extends Component implements IDebugConsole {
     }
   }
 
-  open() {
-      this.render();
+  open(mountTo?: HTMLElement | string | null) {
+    if (mountTo) {
+      this.#mountTo = mountTo;
+    }
+    this.render();
   }
 
   openFilters() {}
