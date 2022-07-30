@@ -111,22 +111,19 @@ Property              | Purpose
 
 Property              | Purpose
 --------------------- | -------------
-wrapper               | string
-container             | string
-info                  | 
-error                 |
-warning               |
-debug                 |
-logRecordWrapper      |
-logRecordContainer    |
-logRecordTimestamp    |
-logRecordName         |
-logRecordLevel        |
-prefix                |
-showAbsoluteTime      |
-showRelativeTime      |
-showLoggerName        |
-showSeverityLevel     |
+info                  | CSS class name(s) to append to info log element.
+error                 | CSS class name(s) to append to error log element.
+warning               | CSS class name(s) to append to warning log element.
+debug                 | CSS class name(s) to append to debug log element.
+logRecordContainer    | CSS class name(s) to append to log element.
+logRecordTimestamp    | CSS class name(s) to append to log element.
+logRecordName         | CSS class name(s) to append to log element.
+logRecordLevel        | CSS class name(s) to append to log element.
+prefix                | CSS class name(s) to append to log element.
+showAbsoluteTime      | A boolean to display the current time.
+showRelativeTime      | A boolean to display the relative time, since the log was created.
+showLoggerName        | A boolean to display the name of the logger.
+showSeverityLevel     | A boolean to display the log level of the record.
 
 #### Toolbar
 
