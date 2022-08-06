@@ -8,5 +8,7 @@ package-lock.json
 coverage/
 node_modules/
 src/
-tests/
-example/
+**/tests/
+**/e2e/
+demo/
+__mocks__/

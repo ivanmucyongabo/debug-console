@@ -196,6 +196,7 @@ export class LogBuffer {
         return this.#buffer[currIndex] = new LogRecord(level, msg, name);
 
     }
+
     forEach(fn: (record: LogRecord) => void) {
         const buffer = this.#buffer;
         // Corner case: no records.
