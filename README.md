@@ -14,26 +14,28 @@ If you want to use the default styles, you need to import styles explicitly.
 
 With the download you'll find the following directoryies and files, with both compiled and minified versions.
 
-<detail>
+<details>
     <summary>Download contents</summary>
+
     ```text
     debug-ui/
-    |-- css/
-      |-- index.css
-    |-- index.bundle.js
-    |-- index.bundle.js.map
-    |-- index.bundle.min.js
-    |-- index.bundle.min.js.map
-    |-- index.esm.js
-    |-- index.esm.js.map
-    |-- index.esm.min.js
-    |-- index.esm.min.js.map
-    |-- index.js
-    |-- index.js.map
-    |-- index.min.js
-    |-- index.min.js.map
+    ├── css/
+    │   └──  index.css
+    ├── index.bundle.js
+    ├── index.bundle.js.map
+    ├── index.bundle.min.js
+    ├── index.bundle.min.js.map
+    ├── index.esm.js
+    ├── index.esm.js.map
+    ├── index.esm.min.js
+    ├── index.esm.min.js.map
+    ├── index.js
+    ├── index.js.map
+    ├── index.min.js
+    └──  index.min.js.map
     ```
-</detail>
+
+</details>
 
 ## Usage
 
