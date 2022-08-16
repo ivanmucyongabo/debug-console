@@ -3,12 +3,28 @@
  */
 
 import { Component, IComponent, IComponentConfig } from "./base";
-import { ToolBar, ToolBarButton, ToolBarComboBox, ToolBarAccordian, ToolBarCounter } from "./toolbar";
+import { ToolBar, ToolBarButton, ToolBarComboBox, ToolBarAccordian, ToolBarCounter, ToolBarItem } from "./toolbar";
 import { Formatter } from "../lib/formatter";
 import { LogRecord } from "../lib/logger";
 import union from 'lodash.union';
 
 const DEFAULT_SEPERATOR = '-';
+
+class ToolBarClearButton extends ToolBarButton {
+  attachListeners() {
+      super.attachListeners();
+      let el = this.element;
+
+      el?.addEventListener('click', (e) => this.handleClick(e));
+  }
+
+  handleClick(e: MouseEvent) {
+    e.target?.dispatchEvent(new CustomEvent('clear', {
+      bubbles: true,
+      detail: {}      
+    }))
+  }
+}
 
 export interface IDebugConsoleComponentConfig extends IComponentConfig {
   mountTo: HTMLElement|string|null,
@@ -30,7 +46,6 @@ export interface IDebugConsole extends IComponent {
   logClassNames: string[];
   footerClassNames: string[];
 }
-
 
 export class DebugConsole extends Component implements IDebugConsole {
   name:string = 'debug-console';
@@ -125,8 +140,7 @@ export class DebugConsole extends Component implements IDebugConsole {
   closeFilters() {}
 
   clear() {
-      this.#logEl_!.innerHTML = "";
-      while (this.#logEl_?.firstChild) this.#logEl_.removeChild(this.#logEl_.firstChild);
+    while (this.#logEl_?.firstChild) this.#logEl_.removeChild(this.#logEl_.firstChild);
   }
 
   exit() {
@@ -138,6 +152,8 @@ export class DebugConsole extends Component implements IDebugConsole {
 
   render(): HTMLElement {
     let html = super.render();
+
+
 
     if (this.#mountTo && (typeof this.#mountTo === 'string')) {
       let target = document.getElementById(this.#mountTo);
@@ -152,36 +168,52 @@ export class DebugConsole extends Component implements IDebugConsole {
   }
 
   renderAsHTML(): HTMLElement {
-      let el = super.renderAsHTML();
+    let el = super.renderAsHTML();
 
-      let headerEl = document.createElement('header');
-      headerEl.classList.add(...this.#headerClassNames_);
-      headerEl.setAttribute('id', this.#headerId_);
-      headerEl.append(this.#toolbar_.renderAsHTML());
+    let headerEl = document.createElement('header');
+    headerEl.classList.add(...this.#headerClassNames_);
+    headerEl.setAttribute('id', this.#headerId_);
+    headerEl.append(this.#toolbar_.render());
 
-      let logEl = document.createElement('div');
-      logEl.classList.add(...this.#logClassNames_);
-      logEl.setAttribute('id', this.#logId_);
+    let logEl = document.createElement('div');
+    logEl.classList.add(...this.#logClassNames_);
+    logEl.setAttribute('id', this.#logId_);
 
-      let footerEl = document.createElement('footer');
-      footerEl.classList.add(...this.#footerClassNames_);
-      footerEl.setAttribute('id', this.#footerId_);
+    let footerEl = document.createElement('footer');
+    footerEl.classList.add(...this.#footerClassNames_);
+    footerEl.setAttribute('id', this.#footerId_);
 
-      el.append(
-        headerEl,
-        logEl,
-        footerEl
-      );
+    el.append(
+      headerEl,
+      logEl,
+      footerEl
+    );
 
-      this.#logEl_ = logEl;
+    this.#logEl_ = logEl;
 
-      return this.element = el;
+    return this.element = el;
+  }
+
+  attachListeners() {
+    super.attachListeners();
+
+    let defaultGroup: ToolBarItem[]|undefined = this.#toolbar_.group('default');
+
+    if (defaultGroup) {
+      this.defaultToolbarListeners(defaultGroup);
+    }
+  }
+
+  defaultToolbarListeners(items: ToolBarItem[]) {
+    let el = this.element;
+
+    el?.addEventListener('clear', (e) => this.clear());
   }
 
   static defaultToolbar() {
     let toolbar = new ToolBar({});
 
-    toolbar.insert('default', new ToolBarButton({
+    toolbar.insert('default', new ToolBarClearButton({
       label: 'clear',
       icon: '<svg xmlns="http://www.w3.org/2000/svg" height="24" viewBox="0 0 24 24" width="24"><path d="M0 0h24v24H0z" fill="none"/><path d="M6 19c0 1.1.9 2 2 2h8c1.1 0 2-.9 2-2V7H6v12zM19 4h-3.5l-1-1h-5l-1 1H5v2h14V4z"/></svg>'
     }));

@@ -77,14 +77,17 @@ export class ToolBarCounter extends Counter implements ICounter {
 }
 export class ToolBarButton extends Button implements IButton {
     #parent_?: ToolBar;
+
     constructor(config: IToolBarButtonConfig) {
         config.classNames = union(config.classNames || [], []);
         super(config)
         this.#parent_ = config.toolbar;
     }
+
     set parent(parent: ToolBar) {
         this.#parent_ = parent;
     }
+
     renderAsHTML(): HTMLElement {
         let html = super.renderAsHTML();
 
@@ -129,6 +132,10 @@ export class ToolBar extends Component implements IToolBar {
         }
     }
 
+    group(index: string): ToolBarItem[]|undefined {
+        return this.#items_[index];
+    }
+
     insert(group: string, item: ToolBarItem): boolean {
         let initialInsert = false;
 
@@ -153,15 +160,16 @@ export class ToolBar extends Component implements IToolBar {
         return groupEl;
     }
 
-    renderAsHTML(): HTMLElement {
-        let html = super.renderAsHTML();
+    render(): HTMLElement {
+        let html = super.render();
+
         let itemsCopy = this.#items_;
 
         for(let i=0, groups=Object.keys(itemsCopy), group; group=groups[i]; i++) {
             let groupHTML = this.groupHTML(group);
 
             for(let j=0, items=itemsCopy[group], item; item=items[j]; j++) {
-                let itemEl = item.renderAsHTML();
+                let itemEl = item.render();
                 itemEl.classList.add(...this.#itemClassNames_);
                 groupHTML.append(itemEl)
             }

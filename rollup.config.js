@@ -79,7 +79,14 @@ export default commandLineArgs => {
         open: true,
         contentBase: 'demo'
       }),
-      livereload('demo'),
+      livereload({
+        watch: 'demo',
+        verbose: false, // Disable console output
+      
+        // other livereload options
+        port: 12345,
+        delay: 300
+      }),
     );
   }
 

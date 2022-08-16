@@ -89,5 +89,6 @@ export class Component implements IComponent {
             return this.element = el;
         }        
     }
+
     attachListeners() {}
 }

@@ -54,6 +54,10 @@ export class Button extends Component implements IButton {
         this.#iconClassNames_ = union(config.iconclassNames || [], [`${this.name}${DEFAULT_SEPERATOR}icon`]);
     }
 
+    get label(): string {
+        return this.#label_;
+    }
+
     renderAsHTML(): HTMLElement {
         let html = super.renderAsHTML();
 
@@ -64,6 +68,7 @@ export class Button extends Component implements IButton {
 
         return html;
     }
+
     labelHTML(label: string) {
         let html = document.createElement('span')
         html.setAttribute('id', this.#labelId_)
@@ -72,6 +77,7 @@ export class Button extends Component implements IButton {
 
         return html;
     }
+
     iconHTML(icon?: string) {
         let html = document.createElement('span')
         html.setAttribute('id', this.#iconId_)
