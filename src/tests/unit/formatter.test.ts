@@ -1,5 +1,4 @@
 import { Timer } from "../../lib/timer";
-import { MockTimer } from "../../../__mocks__/timer";
 import { Formatter } from "../../lib/formatter";
 
 describe('formatter', () => {

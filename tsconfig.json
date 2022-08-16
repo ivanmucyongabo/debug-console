@@ -1,6 +1,6 @@
 {
   // "include": ["src/**/*"],
-  // "$schema": "https://json.schemastore.org/tsconfig",
+  "$schema": "https://json.schemastore.org/tsconfig",
   "compilerOptions": {
     "target": "ES2015",
     "lib": [ "ES2015", "ES2017", "DOM" ],
@@ -20,7 +20,7 @@
     "module": "commonjs",
     "moduleResolution": "node",
     "esModuleInterop": true,
-    "forceConsistentCasingInFileNames": true,
+    "forceConsistentCasingInFileNames": true
   },
   "exclude": ["node_modules", "dist", "example", "coverage", "build"]
 }

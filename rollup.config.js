@@ -5,7 +5,7 @@ import commonjs from '@rollup/plugin-commonjs';
 import { babel } from '@rollup/plugin-babel';
 import typescript from '@rollup/plugin-typescript';
 import { terser } from 'rollup-plugin-terser';
-const replace = require('@rollup/plugin-replace')
+const replace = require('@rollup/plugin-replace');
 
 import serve from 'rollup-plugin-serve';
 import livereload from 'rollup-plugin-livereload';

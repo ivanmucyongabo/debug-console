@@ -3,7 +3,11 @@
 babel.config.js
 jest.config.js
 tsconfig.json
+tsconfig.demo.json
+tsconfig.build.json
+rollup.config.js
 package-lock.json
+tslint.json
 
 coverage/
 node_modules/
@@ -12,3 +16,4 @@ src/
 **/e2e/
 demo/
 __mocks__/
+build/
