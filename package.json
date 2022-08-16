@@ -10,7 +10,7 @@
     "typecheck": "tsc -p . --noEmit",
     "lint": "tslint --project tsconfig.json --format stylish",
     "lint:fix": "tslint --fix --project tsconfig.json",
-    "demo": "rollup --environment BUNDLE:true --config rollup.config.js --configDemo",
+    "start": "rollup --environment BUNDLE:true --config rollup.config.js --configDemo",
     "test": "jest --coverage",
     "test:watch": "jest --watch",
     "posttest": "npm run typecheck && npm run lint",
