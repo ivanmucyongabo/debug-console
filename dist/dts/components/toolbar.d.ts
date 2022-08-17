@@ -42,7 +42,9 @@ export declare type ToolBarItem = ToolBarComboBox | ToolBarAccordian | ToolBarCo
 export interface IToolBarConfig extends IComponentConfig {
     itemClassNames?: string[];
     items?: {
-        [key: string]: ToolBarItem[];
+        [key: string]: {
+            [key: string]: ToolBarItem;
+        };
     };
     groupClassNames?: string[];
 }
@@ -52,8 +54,10 @@ export declare class ToolBar extends Component implements IToolBar {
     #private;
     name: string;
     constructor(config: IToolBarConfig);
-    group(index: string): ToolBarItem[] | undefined;
-    insert(group: string, item: ToolBarItem): boolean;
+    group(index: string): {
+        [key: string]: ToolBarItem;
+    } | undefined;
+    insert(group: string, label: string, item: ToolBarItem): boolean;
     groupHTML(name: string): HTMLElement;
     render(): HTMLElement;
     html(): HTMLElement;

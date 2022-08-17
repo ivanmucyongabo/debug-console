@@ -10,7 +10,7 @@ import './css/console.css';
 import './css/counter.css';
 import './css/toolbar.css';
 import { Formatter } from './lib/formatter';
-import { LogBuffer, LogLevel, LogRecord, LogRegistry, LogRegistryItem, Logger } from "./lib/logger";
+import { LogBuffer, LogLevel, LogRecord, LogRegistry, LogRegistryItem, Logger } from './lib/logger';
 export declare const logRegistry: LogRegistry;
 export declare const logBuffer: LogBuffer;
 declare const getLogger: (name: string, level?: LogLevel) => LogRegistryItem;

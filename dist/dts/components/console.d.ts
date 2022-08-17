@@ -1,7 +1,11 @@
-import { Formatter } from "../lib/formatter";
-import { LogRecord } from "../lib/logger";
-import { Component, IComponent, IComponentConfig } from "./base";
-import { ToolBar, ToolBarItem } from "./toolbar";
+import { Formatter } from '../lib/formatter';
+import { LogRecord } from '../lib/logger';
+import { Component, IComponent, IComponentConfig } from './base';
+import { ToolBar, ToolBarButton, ToolBarItem } from './toolbar';
+export declare class ToolBarClearButton extends ToolBarButton {
+    attachListeners(): void;
+    handleClick(e: MouseEvent): void;
+}
 export interface IDebugConsoleComponentConfig extends IComponentConfig {
     mountTo: HTMLElement | string | null;
     toolbar?: ToolBar;
@@ -44,6 +48,8 @@ export declare class DebugConsole extends Component implements IDebugConsole {
     render(): HTMLElement;
     renderAsHTML(): HTMLElement;
     attachListeners(): void;
-    defaultToolbarListeners(items: ToolBarItem[]): void;
+    defaultToolbarListeners(items: {
+        [key: string]: ToolBarItem;
+    }): void;
     static defaultToolbar(): ToolBar;
 }

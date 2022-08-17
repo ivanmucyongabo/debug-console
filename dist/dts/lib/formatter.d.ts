@@ -1,5 +1,5 @@
-import { LogRecord } from "./logger";
-import { Timer } from "./timer";
+import { LogRecord } from './logger';
+import { Timer } from './timer';
 export interface IFormatterConfig {
     info?: string;
     error?: string;

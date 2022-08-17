@@ -54,7 +54,7 @@
             _Component_tagName_.set(this, void 0);
             _Component_element_.set(this, void 0);
             __classPrivateFieldSet(this, _Component_uuid_, uniqueId__default["default"](), "f");
-            __classPrivateFieldSet(this, _Component_id_, config.id || (camelCase__default["default"](this.constructor.name) + __classPrivateFieldGet(this, _Component_uuid_, "f")), "f");
+            __classPrivateFieldSet(this, _Component_id_, config.id || camelCase__default["default"](this.constructor.name) + __classPrivateFieldGet(this, _Component_uuid_, "f"), "f");
             __classPrivateFieldSet(this, _Component_tagName_, config.tagName || DEFAULT_TAG_NAME, "f");
             __classPrivateFieldSet(this, _Component_element_, null, "f");
             __classPrivateFieldSet(this, _Component_classNames_, union__default["default"](config.classNames || [], [this.name]), "f");
@@ -97,7 +97,7 @@
                 const el = document.createElement(__classPrivateFieldGet(this, _Component_tagName_, "f"));
                 el.setAttribute('id', __classPrivateFieldGet(this, _Component_id_, "f"));
                 el.classList.add(...__classPrivateFieldGet(this, _Component_classNames_, "f"));
-                return this.element = el;
+                return (this.element = el);
             }
         }
         attachListeners() {
@@ -221,9 +221,14 @@
             __classPrivateFieldSet(this, _ComboBox_inputClassNames_, union__default["default"](config.inputClasses || [], [`${this.name}${DEFAULT_SEPERATOR$3}input`]), "f");
             __classPrivateFieldSet(this, _ComboBox_btnClassNames_, union__default["default"](config.btnClasses || [], [`${this.name}${DEFAULT_SEPERATOR$3}button`]), "f");
             __classPrivateFieldSet(this, _ComboBox_listBoxClassNames_, union__default["default"](config.listBoxClasses || [], [`${this.name}${DEFAULT_SEPERATOR$3}listbox`]), "f");
-            __classPrivateFieldSet(this, _ComboBox_listBoxItemClassNames_, union__default["default"](config.listBoxItemClassNames || [], [`${this.name}${DEFAULT_SEPERATOR$3}listbox${DEFAULT_SEPERATOR$3}item`]), "f");
+            __classPrivateFieldSet(this, _ComboBox_listBoxItemClassNames_, union__default["default"](config.listBoxItemClassNames || [], [
+                `${this.name}${DEFAULT_SEPERATOR$3}listbox${DEFAULT_SEPERATOR$3}item`,
+            ]), "f");
             __classPrivateFieldSet(this, _ComboBox_containerClassNames_, union__default["default"](config.containerClassNames || [], [`${this.name}${DEFAULT_SEPERATOR$3}group`]), "f");
-            this.classNames = union__default["default"](config.wrapperClassNames || [], this.classNames, [this.name, `${this.name}${DEFAULT_SEPERATOR$3}list`]);
+            this.classNames = union__default["default"](config.wrapperClassNames || [], this.classNames, [
+                this.name,
+                `${this.name}${DEFAULT_SEPERATOR$3}list`,
+            ]);
         }
         get filter() {
             return __classPrivateFieldGet(this, _ComboBox_filter_, "f");
@@ -278,7 +283,7 @@
             listbox.setAttribute('type', 'text');
             listbox.setAttribute('role', 'listbox');
             listbox.classList.add(...__classPrivateFieldGet(this, _ComboBox_listBoxClassNames_, "f"));
-            for (let i = 0, options = __classPrivateFieldGet(this, _ComboBox_options_, "f"), option; option = options[i]; i++) {
+            for (let i = 0, options = __classPrivateFieldGet(this, _ComboBox_options_, "f"), option; (option = options[i]); i++) {
                 listbox.append(this.optHTML(option));
             }
             return listbox;
@@ -329,7 +334,7 @@
         set timestamp(time) {
             __classPrivateFieldSet(this, _LogRecord_timer, time, "f");
         }
-        reset(level, msg, name, timestamp, time) {
+        reset(level, msg, name, timestamp) {
             __classPrivateFieldSet(this, _LogRecord_level, level, "f");
             __classPrivateFieldSet(this, _LogRecord_msg, msg, "f");
             __classPrivateFieldSet(this, _LogRecord_name, name, "f");
@@ -382,7 +387,7 @@
             }), "f");
         }
         fire(record) {
-            __classPrivateFieldGet(this, _LogRegistryItem_handlers, "f").forEach(handler => {
+            __classPrivateFieldGet(this, _LogRegistryItem_handlers, "f").forEach((handler) => {
                 handler(record);
             });
         }
@@ -415,8 +420,7 @@
             }
         }
         getLoggers() {
-            return Object.keys(__classPrivateFieldGet(this, _LogRegistry_items, "f"))
-                .map(loggerName => __classPrivateFieldGet(this, _LogRegistry_items, "f")[loggerName]);
+            return Object.keys(__classPrivateFieldGet(this, _LogRegistry_items, "f")).map((loggerName) => __classPrivateFieldGet(this, _LogRegistry_items, "f")[loggerName]);
         }
     }
     _LogRegistry_items = new WeakMap();
@@ -459,8 +463,8 @@
                 ret.reset(level, msg, name);
                 return ret;
             }
-            __classPrivateFieldSet(this, _LogBuffer_isFull, currIndex === (__classPrivateFieldGet(this, _LogBuffer_capacity, "f") - 1), "f");
-            return __classPrivateFieldGet(this, _LogBuffer_buffer, "f")[currIndex] = new LogRecord(level, msg, name);
+            __classPrivateFieldSet(this, _LogBuffer_isFull, currIndex === __classPrivateFieldGet(this, _LogBuffer_capacity, "f") - 1, "f");
+            return (__classPrivateFieldGet(this, _LogBuffer_buffer, "f")[currIndex] = new LogRecord(level, msg, name));
         }
         forEach(fn) {
             const buffer = __classPrivateFieldGet(this, _LogBuffer_buffer, "f");
@@ -471,7 +475,7 @@
             let i = __classPrivateFieldGet(this, _LogBuffer_isFull, "f") ? currIndex : -1;
             do {
                 i = (i + 1) % __classPrivateFieldGet(this, _LogBuffer_capacity, "f");
-                fn((buffer[i]));
+                fn(buffer[i]);
             } while (i !== currIndex);
         }
         clear() {
@@ -484,9 +488,9 @@
 
     var _Timer_timestamp;
     class Timer {
-        constructor() {
+        constructor(timestamp) {
             _Timer_timestamp.set(this, void 0);
-            __classPrivateFieldSet(this, _Timer_timestamp, Date.now(), "f");
+            __classPrivateFieldSet(this, _Timer_timestamp, timestamp || Date.now(), "f");
         }
         get timestamp() {
             return __classPrivateFieldGet(this, _Timer_timestamp, "f");
@@ -577,12 +581,12 @@
                 logRecordTimestamp: __classPrivateFieldGet(this, _Formatter_logRecordTimestamp, "f"),
                 logRecordName: __classPrivateFieldGet(this, _Formatter_logRecordName, "f"),
                 logRecordLevel: __classPrivateFieldGet(this, _Formatter_logRecordLevel, "f"),
-                prefix: __classPrivateFieldGet(this, _Formatter_prefix, "f")
+                prefix: __classPrivateFieldGet(this, _Formatter_prefix, "f"),
             };
         }
         getDateTimeStamp(logRecord) {
             const time = new Date(logRecord.timestamp);
-            const date = `${(time.getMonth() + 1)}/${time.getDate()}/${(time.getFullYear() - 2000)}`;
+            const date = `${time.getMonth() + 1}/${time.getDate()}/${time.getFullYear() - 2000}`;
             return `${date} ${time.getHours()}:${time.getMinutes()}:${time.getSeconds()}.${Math.floor(time.getMilliseconds() / 10)}`;
         }
         getRelativeTimestamp(logRecord, timestamp) {
@@ -801,8 +805,8 @@
             __classPrivateFieldSet(this, _ToolBar_itemClassNames_, union__default["default"](config.itemClassNames || [], [`${this.name}${DEFAULT_SEPERATOR$1}item`]), "f");
             __classPrivateFieldSet(this, _ToolBar_groupClassNames_, union__default["default"](config.groupClassNames || [], [`${this.name}-group`, 'group']), "f");
             this.classNames = union__default["default"](this.classNames, [this.name]);
-            for (let i = 0, groups = Object.values(__classPrivateFieldGet(this, _ToolBar_items_, "f")), group; group = groups[i]; i++) {
-                for (let j = 0, items = group, item; item = items[j]; j++) {
+            for (let i = 0, groups = Object.values(__classPrivateFieldGet(this, _ToolBar_items_, "f")), group; (group = groups[i]); i++) {
+                for (let j = 0, items = group, item; (item = items[j]); j++) {
                     item.parent = this;
                 }
             }
@@ -810,16 +814,16 @@
         group(index) {
             return __classPrivateFieldGet(this, _ToolBar_items_, "f")[index];
         }
-        insert(group, item) {
+        insert(group, label, item) {
             let initialInsert = false;
             if (!__classPrivateFieldGet(this, _ToolBar_items_, "f")[group]) {
                 initialInsert = true;
-                __classPrivateFieldGet(this, _ToolBar_items_, "f")[group] = [];
+                __classPrivateFieldGet(this, _ToolBar_items_, "f")[group] = {};
             }
             if (!item.parent || item.parent !== this) {
                 item.parent = this;
             }
-            __classPrivateFieldGet(this, _ToolBar_items_, "f")[group].push(item);
+            __classPrivateFieldGet(this, _ToolBar_items_, "f")[group][label] = item;
             return initialInsert;
         }
         groupHTML(name) {
@@ -830,9 +834,9 @@
         render() {
             const html = super.render();
             const itemsCopy = __classPrivateFieldGet(this, _ToolBar_items_, "f");
-            for (let i = 0, groups = Object.keys(itemsCopy), group; group = groups[i]; i++) {
+            for (let i = 0, groups = Object.keys(itemsCopy), group; (group = groups[i]); i++) {
                 const groupHTML = this.groupHTML(group);
-                for (let j = 0, items = itemsCopy[group], item; item = items[j]; j++) {
+                for (let j = 0, items = Object.values(itemsCopy[group]), item; (item = items[j]); j++) {
                     const itemEl = item.render();
                     itemEl.classList.add(...__classPrivateFieldGet(this, _ToolBar_itemClassNames_, "f"));
                     groupHTML.append(itemEl);
@@ -862,9 +866,8 @@
         }
         handleClick(e) {
             var _a;
-            (_a = e.target) === null || _a === void 0 ? void 0 : _a.dispatchEvent(new CustomEvent('clear', {
+            (_a = e.target) === null || _a === void 0 ? void 0 : _a.dispatchEvent(new CustomEvent('clearconsole', {
                 bubbles: true,
-                detail: {}
             }));
         }
     }
@@ -936,10 +939,27 @@
                 return;
             }
             __classPrivateFieldSet(this, _DebugConsole_logEl_, __classPrivateFieldGet(this, _DebugConsole_logEl_, "f") || document.createElement('div'), "f");
-            const scroll = (__classPrivateFieldGet(this, _DebugConsole_logEl_, "f").scrollHeight - __classPrivateFieldGet(this, _DebugConsole_logEl_, "f").scrollTop - __classPrivateFieldGet(this, _DebugConsole_logEl_, "f").clientHeight) <= 100;
+            const scroll = __classPrivateFieldGet(this, _DebugConsole_logEl_, "f").scrollHeight - __classPrivateFieldGet(this, _DebugConsole_logEl_, "f").scrollTop - __classPrivateFieldGet(this, _DebugConsole_logEl_, "f").clientHeight <= 100;
             __classPrivateFieldGet(this, _DebugConsole_logEl_, "f").appendChild(__classPrivateFieldGet(this, _DebugConsole_formatter_, "f").formatAsHtml(logRecord));
             if (scroll) {
                 __classPrivateFieldGet(this, _DebugConsole_logEl_, "f").scrollTop = __classPrivateFieldGet(this, _DebugConsole_logEl_, "f").scrollHeight;
+            }
+            const defaultGroup = __classPrivateFieldGet(this, _DebugConsole_toolbar_, "f").group('default');
+            if (defaultGroup) {
+                switch (logRecord.level) {
+                    case LogLevel.Info:
+                        const infoCounter = defaultGroup.defaultInfoCounter;
+                        infoCounter.count = infoCounter.count + 1;
+                        break;
+                    case LogLevel.Warning:
+                        const warningCounter = defaultGroup.defaultWarningCounter;
+                        warningCounter.count = warningCounter.count + 1;
+                        break;
+                    case LogLevel.Error:
+                        const errorCounter = defaultGroup.defaultErrorCounter;
+                        errorCounter.count = errorCounter.count + 1;
+                        break;
+                }
             }
         }
         open(mountTo) {
@@ -962,12 +982,12 @@
         render() {
             var _a;
             const html = super.render();
-            if (__classPrivateFieldGet(this, _DebugConsole_mountTo, "f") && (typeof __classPrivateFieldGet(this, _DebugConsole_mountTo, "f") === 'string')) {
+            if (__classPrivateFieldGet(this, _DebugConsole_mountTo, "f") && typeof __classPrivateFieldGet(this, _DebugConsole_mountTo, "f") === 'string') {
                 const target = document.getElementById(__classPrivateFieldGet(this, _DebugConsole_mountTo, "f"));
                 target === null || target === void 0 ? void 0 : target.append(html);
                 __classPrivateFieldSet(this, _DebugConsole_mountTo, target, "f");
             }
-            else if (__classPrivateFieldGet(this, _DebugConsole_mountTo, "f") && (__classPrivateFieldGet(this, _DebugConsole_mountTo, "f") instanceof HTMLElement)) {
+            else if (__classPrivateFieldGet(this, _DebugConsole_mountTo, "f") && __classPrivateFieldGet(this, _DebugConsole_mountTo, "f") instanceof HTMLElement) {
                 (_a = __classPrivateFieldGet(this, _DebugConsole_mountTo, "f")) === null || _a === void 0 ? void 0 : _a.append(html);
             }
             return html;
@@ -986,7 +1006,7 @@
             footerEl.setAttribute('id', __classPrivateFieldGet(this, _DebugConsole_footerId_, "f"));
             el.append(headerEl, logEl, footerEl);
             __classPrivateFieldSet(this, _DebugConsole_logEl_, logEl, "f");
-            return this.element = el;
+            return (this.element = el);
         }
         attachListeners() {
             super.attachListeners();
@@ -997,24 +1017,24 @@
         }
         defaultToolbarListeners(items) {
             const el = this.element;
-            el === null || el === void 0 ? void 0 : el.addEventListener('clear', (e) => this.clear());
+            el === null || el === void 0 ? void 0 : el.addEventListener('clearconsole', (e) => this.clear());
         }
         static defaultToolbar() {
             const toolbar = new ToolBar({});
-            toolbar.insert('default', new ToolBarClearButton({
+            toolbar.insert('default', 'defaultClear', new ToolBarClearButton({
                 label: 'clear',
-                icon: '<svg xmlns="http://www.w3.org/2000/svg" height="24" viewBox="0 0 24 24" width="24"><path d="M0 0h24v24H0z" fill="none"/><path d="M6 19c0 1.1.9 2 2 2h8c1.1 0 2-.9 2-2V7H6v12zM19 4h-3.5l-1-1h-5l-1 1H5v2h14V4z"/></svg>'
+                icon: '<svg xmlns="http://www.w3.org/2000/svg" height="24" viewBox="0 0 24 24" width="24"><path d="M0 0h24v24H0z" fill="none"/><path d="M6 19c0 1.1.9 2 2 2h8c1.1 0 2-.9 2-2V7H6v12zM19 4h-3.5l-1-1h-5l-1 1H5v2h14V4z"/></svg>',
             }));
-            toolbar.insert('default', new ToolBarComboBox({
-                options: ['debug', 'info', 'warning', 'error']
+            toolbar.insert('default', 'defaultCombobox', new ToolBarComboBox({
+                options: ['debug', 'info', 'warning', 'error'],
             }));
-            toolbar.insert('default', new ToolBarCounter({ label: 'info', classNames: ['counter--info'] }));
-            toolbar.insert('default', new ToolBarCounter({ label: 'warning', classNames: ['counter--warning'] }));
-            toolbar.insert('default', new ToolBarCounter({ label: 'error', classNames: ['counter--error'] }));
-            toolbar.insert('default', new ToolBarAccordian({
+            toolbar.insert('default', 'defaultInfoCounter', new ToolBarCounter({ label: 'info', classNames: ['counter--info'] }));
+            toolbar.insert('default', 'defaultWarningCounter', new ToolBarCounter({ label: 'warning', classNames: ['counter--warning'] }));
+            toolbar.insert('default', 'defaultErrorCounter', new ToolBarCounter({ label: 'error', classNames: ['counter--error'] }));
+            toolbar.insert('default', 'defaultSettingsAccordian', new ToolBarAccordian({
                 label: 'settings',
                 icon: '<svg xmlns="http://www.w3.org/2000/svg" enable-background="new 0 0 24 24" height="24" viewBox="0 0 24 24" width="24"><g><path d="M0,0h24v24H0V0z" fill="none"/><path d="M19.14,12.94c0.04-0.3,0.06-0.61,0.06-0.94c0-0.32-0.02-0.64-0.07-0.94l2.03-1.58c0.18-0.14,0.23-0.41,0.12-0.61 l-1.92-3.32c-0.12-0.22-0.37-0.29-0.59-0.22l-2.39,0.96c-0.5-0.38-1.03-0.7-1.62-0.94L14.4,2.81c-0.04-0.24-0.24-0.41-0.48-0.41 h-3.84c-0.24,0-0.43,0.17-0.47,0.41L9.25,5.35C8.66,5.59,8.12,5.92,7.63,6.29L5.24,5.33c-0.22-0.08-0.47,0-0.59,0.22L2.74,8.87 C2.62,9.08,2.66,9.34,2.86,9.48l2.03,1.58C4.84,11.36,4.8,11.69,4.8,12s0.02,0.64,0.07,0.94l-2.03,1.58 c-0.18,0.14-0.23,0.41-0.12,0.61l1.92,3.32c0.12,0.22,0.37,0.29,0.59,0.22l2.39-0.96c0.5,0.38,1.03,0.7,1.62,0.94l0.36,2.54 c0.05,0.24,0.24,0.41,0.48,0.41h3.84c0.24,0,0.44-0.17,0.47-0.41l0.36-2.54c0.59-0.24,1.13-0.56,1.62-0.94l2.39,0.96 c0.22,0.08,0.47,0,0.59-0.22l1.92-3.32c0.12-0.22,0.07-0.47-0.12-0.61L19.14,12.94z M12,15.6c-1.98,0-3.6-1.62-3.6-3.6 s1.62-3.6,3.6-3.6s3.6,1.62,3.6,3.6S13.98,15.6,12,15.6z"/></g></svg>',
-                panel: 'settings accordian panel'
+                panel: 'settings accordian panel',
             }));
             return toolbar;
         }

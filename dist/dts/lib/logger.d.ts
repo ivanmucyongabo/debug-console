@@ -13,7 +13,7 @@ export declare class LogRecord {
     get name(): string;
     get timestamp(): number;
     set timestamp(time: number);
-    reset(level: LogLevel, msg: string, name: string, timestamp?: number, time?: number): void;
+    reset(level: LogLevel, msg: string, name: string, timestamp?: number): void;
 }
 export declare class Logger {
     #private;

@@ -173,16 +173,18 @@ export class DebugConsole extends Component implements IDebugConsole {
     if (defaultGroup) {
       switch (logRecord.level) {
         case LogLevel.Info:
-          let infoCounter = defaultGroup['defaultInfoCounter'] as ToolBarCounter
+          const infoCounter = defaultGroup.defaultInfoCounter as ToolBarCounter
           infoCounter.count = infoCounter.count + 1
           break
         case LogLevel.Warning:
-          let warningCounter = defaultGroup['defaultWarningCounter'] as ToolBarCounter
+          const warningCounter = defaultGroup.defaultWarningCounter as ToolBarCounter
           warningCounter.count = warningCounter.count + 1
           break
         case LogLevel.Error:
-          let errorCounter = defaultGroup['defaultErrorCounter'] as ToolBarCounter
+          const errorCounter = defaultGroup.defaultErrorCounter as ToolBarCounter
           errorCounter.count = errorCounter.count + 1
+          break
+        default:
           break
       }
     }
