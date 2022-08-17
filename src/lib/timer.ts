@@ -1,18 +1,18 @@
 export class Timer {
-    #timestamp: number;
+    #timestamp: number
 
     constructor() {
-        this.#timestamp = Date.now();
+        this.#timestamp = Date.now()
     }
 
     get timestamp() {
-        return this.#timestamp;
+        return this.#timestamp
     }
     set timestamp(timestamp: number) {
-        this.#timestamp = timestamp;
+        this.#timestamp = timestamp
     }
 
     reset() {
-        this.#timestamp = Date.now();
+        this.#timestamp = Date.now()
     }
 }

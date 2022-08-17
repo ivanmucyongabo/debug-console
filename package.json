@@ -8,8 +8,7 @@
   "scripts": {
     "clean": "rimraf dist coverage demo",
     "typecheck": "tsc -p . --noEmit",
-    "lint": "tslint --project tsconfig.json --format stylish",
-    "lint:fix": "tslint --fix --project tsconfig.json",
+    "lint": "tslint --fix --project tsconfig.json --format stylish",
     "start": "rollup --environment BUNDLE:true --config rollup.config.js --configDemo",
     "test": "jest --coverage",
     "test:watch": "jest --watch",
@@ -61,6 +60,7 @@
     "jest": "^28.1.3",
     "jest-environment-jsdom": "^28.1.3",
     "jest-transform-css": "^4.0.1",
+    "lint-staged": "^13.0.3",
     "npm-run-all": "^4.1.5",
     "postcss": "^8.4.14",
     "postcss-csso": "^6.0.0",

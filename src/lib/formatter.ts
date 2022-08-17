@@ -1,15 +1,15 @@
-import { LogLevel, LogRecord } from "./logger";
-import { Timer } from "./timer";
+import { LogLevel, LogRecord } from "./logger"
+import { Timer } from "./timer"
 
 const escapeWhitespace = (str: string): string => {
-    return str;
-};
+    return str
+}
 const newLineToBr = (str: string): string => {
-    return str;
+    return str
 }
 const htmlEscape = (str: string): string => {
-    return str;
-};
+    return str
+}
 
 export interface IFormatterConfig {
     info?: string,
@@ -26,83 +26,83 @@ export interface IFormatterConfig {
     showRelativeTime?: boolean,
     showLoggerName?: boolean,
     showSeverityLevel?: boolean  
-};
+}
 
 export interface IFormatter {
-    getDateTimeStamp(logRecord: LogRecord): string;
-    getRelativeTimestamp(logRecord: LogRecord, timestamp: number): string;
-    format(logRecord: LogRecord): string;
-    formatAsHtml(logRecord: LogRecord): HTMLElement;
+    getDateTimeStamp(logRecord: LogRecord): string
+    getRelativeTimestamp(logRecord: LogRecord, timestamp: number): string
+    format(logRecord: LogRecord): string
+    formatAsHtml(logRecord: LogRecord): HTMLElement
 }
 
 export class Formatter {
-    #timer: Timer;
-    #showAbsoluteTime: boolean;
-    #showRelativeTime: boolean;
-    #showLoggerName: boolean;
-    #showSeverityLevel: boolean;
-    #info: string;
-    #error: string;
-    #warning: string;
-    #debug: string;
-    #logRecordContainer: string;
-    #logRecordTimestamp: string;
-    #logRecordName: string;
-    #logRecordLevel: string;
-    #logRecordMessage: string;
-    #prefix: string;
+    #timer: Timer
+    #showAbsoluteTime: boolean
+    #showRelativeTime: boolean
+    #showLoggerName: boolean
+    #showSeverityLevel: boolean
+    #info: string
+    #error: string
+    #warning: string
+    #debug: string
+    #logRecordContainer: string
+    #logRecordTimestamp: string
+    #logRecordName: string
+    #logRecordLevel: string
+    #logRecordMessage: string
+    #prefix: string
 
     constructor(config?: IFormatterConfig) {
-        this.#timer = new Timer();
-        this.#showAbsoluteTime = config?.showAbsoluteTime || true;
-        this.#showRelativeTime = config?.showRelativeTime || true;
-        this.#showLoggerName = config?.showLoggerName || true;
-        this.#showSeverityLevel = config?.showSeverityLevel || false;
-        this.#info = config?.info || 'debug-console-log-record--info';
-        this.#error = config?.error || 'debug-console-log-record--error';
-        this.#warning = config?.warning || 'debug-console-log-record--warning';
-        this.#debug = config?.debug || 'debug-console-log-record--debug';
-        this.#logRecordContainer = config?.logRecordContainer || 'debug-console-log-record';
-        this.#logRecordTimestamp = config?.logRecordTimestamp || 'debug-console-log-record-timestamp';
-        this.#logRecordName = config?.logRecordName || 'debug-console-log-record-name';
-        this.#logRecordLevel = config?.logRecordLevel || 'debug-console-log-record-level';
-        this.#logRecordMessage = config?.logRecordMessage || 'debug-console-log-record-message';
-        this.#prefix = config?.prefix || '';
+        this.#timer = new Timer()
+        this.#showAbsoluteTime = config?.showAbsoluteTime || true
+        this.#showRelativeTime = config?.showRelativeTime || true
+        this.#showLoggerName = config?.showLoggerName || true
+        this.#showSeverityLevel = config?.showSeverityLevel || false
+        this.#info = config?.info || 'debug-console-log-record--info'
+        this.#error = config?.error || 'debug-console-log-record--error'
+        this.#warning = config?.warning || 'debug-console-log-record--warning'
+        this.#debug = config?.debug || 'debug-console-log-record--debug'
+        this.#logRecordContainer = config?.logRecordContainer || 'debug-console-log-record'
+        this.#logRecordTimestamp = config?.logRecordTimestamp || 'debug-console-log-record-timestamp'
+        this.#logRecordName = config?.logRecordName || 'debug-console-log-record-name'
+        this.#logRecordLevel = config?.logRecordLevel || 'debug-console-log-record-level'
+        this.#logRecordMessage = config?.logRecordMessage || 'debug-console-log-record-message'
+        this.#prefix = config?.prefix || ''
     }
 
     get timer() {
-        return this.#timer;
+        return this.#timer
     }
     set timer(timer: Timer) {
-        this.#timer = timer;
+        this.#timer = timer
     }
 
     get showAbsoluteTime() {
-        return this.#showAbsoluteTime;
+        return this.#showAbsoluteTime
     }
     set showAbsoluteTime(show: boolean) {
-        this.#showAbsoluteTime = show;
+        this.#showAbsoluteTime = show
     }
 
     get showRelativeTime() {
-        return this.#showRelativeTime;
+        return this.#showRelativeTime
     }
     set showRelativeTime(show: boolean) {
-        this.#showRelativeTime = show;
+        this.#showRelativeTime = show
     }
 
     get showLoggerName() {
-        return this.#showLoggerName;
+        return this.#showLoggerName
     }
     set showLoggerName(show: boolean) {
-        this.#showLoggerName = show;
+        this.#showLoggerName = show
     }
 
     get showSeverityLevel() {
-        return this.#showSeverityLevel;
+        return this.#showSeverityLevel
     }
     set showSeverityLevel(show: boolean) {
-        this.#showSeverityLevel = show;
+        this.#showSeverityLevel = show
     }
 
     get css() {
@@ -116,43 +116,37 @@ export class Formatter {
             logRecordName: this.#logRecordName,
             logRecordLevel: this.#logRecordLevel,
             prefix: this.#prefix
-        };
+        }
     }
 
     getDateTimeStamp(logRecord: LogRecord): string {
-        var time = new Date(logRecord.timestamp);
-        let date = `${(time.getMonth() + 1)}/${time.getDate()}/${(time.getFullYear() - 2000)}`;
+        const time = new Date(logRecord.timestamp)
+        const date = `${(time.getMonth() + 1)}/${time.getDate()}/${(time.getFullYear() - 2000)}`
 
-        return date + ' ' +
-            `${time.getHours()}` + ':' +
-            `${time.getMinutes()}` +
-            ':' +
-            `${time.getSeconds()}` +
-            '.' +
-            `${Math.floor(time.getMilliseconds() / 10)}`;
+        return `${date} ${time.getHours()}:${time.getMinutes()}:${time.getSeconds()}.${Math.floor(time.getMilliseconds() / 10)}`
     }
 
     getRelativeTimestamp(logRecord: LogRecord, timestamp: number): string {
-        let ms = logRecord.timestamp - timestamp;
-        let sec = ms / 1000;
-        let str = sec.toFixed(3);
+        const ms = logRecord.timestamp - timestamp
+        let sec = ms / 1000
+        const str = sec.toFixed(3)
       
-        let spacesToPrepend = 0;
+        let spacesToPrepend = 0
 
         if (sec < 1) {
-          spacesToPrepend = 2;
+          spacesToPrepend = 2
         } else {
           while (sec < 100) {
-            spacesToPrepend++;
-            sec *= 10;
+            spacesToPrepend++
+            sec *= 10
           }
         }
 
         while (spacesToPrepend-- > 0) {
-          str = ' ' + str;
+          str.padStart(str.length+1, ' ')
         }
 
-        return str + 's';
+        return `${str} s`
     }
 
     format(logRecord: LogRecord): string {
@@ -161,68 +155,68 @@ export class Formatter {
 
     formatAsHtml(logRecord: LogRecord): HTMLElement {
         if (!logRecord) {
-            return document.createElement('div');
+            return document.createElement('div')
         }
-        let classNames = this.css;
+        const classNames = this.css
 
-        var className;
+        let className
         switch (logRecord.level) {
             case LogLevel.Error:
-                className = classNames.error;
-                break;
+                className = classNames.error
+                break
             case LogLevel.Warning:
-                className = classNames.warning;
-                break;
+                className = classNames.warning
+                break
             case LogLevel.Info:
-                className = classNames.info;
-                break;
+                className = classNames.info
+                break
             case LogLevel.Debug:
-                className = classNames.debug;
+                className = classNames.debug
             default:
-                className = classNames.debug;
-                break;
+                className = classNames.debug
+                break
         }
     
         // HTML for user defined prefix, time, logger name, and severity.
-        let html = document.createElement('div');
+        const html = document.createElement('div')
         if (this.showAbsoluteTime) {
-            let timestamp = document.createElement('span');
-            timestamp.classList.add(this.#logRecordTimestamp);
-            timestamp.innerText = this.getDateTimeStamp(logRecord);
-            html.append(timestamp);
+            const timestamp = document.createElement('span')
+            timestamp.classList.add(this.#logRecordTimestamp)
+            timestamp.innerText = this.getDateTimeStamp(logRecord)
+            html.append(timestamp)
         }
 
         if (this.showRelativeTime) {
-            let relativeTime = document.createElement('span');
-            relativeTime.classList.add(this.#logRecordTimestamp);
-            relativeTime.innerText = this.getRelativeTimestamp(logRecord, this.#timer.timestamp);
-            html.append(relativeTime);
+            const relativeTime = document.createElement('span')
+            relativeTime.classList.add(this.#logRecordTimestamp)
+            relativeTime.innerText = this.getRelativeTimestamp(logRecord, this.#timer.timestamp)
+            html.append(relativeTime)
         }
 
         if (this.showLoggerName) {
-            let loggerName = document.createElement('span');
-            loggerName.classList.add(this.#logRecordName);
-            loggerName.innerText = logRecord.name;
-            html.append(loggerName);
+            const loggerName = document.createElement('span')
+            loggerName.classList.add(this.#logRecordName)
+            loggerName.innerText = logRecord.name
+            html.append(loggerName)
         }
 
         if (this.showSeverityLevel) {
-            let loggerLevel = document.createElement('span');
-            loggerLevel.classList.add(this.#logRecordLevel);
-            loggerLevel.innerText = LogLevel[logRecord.level];
-            html.append(loggerLevel);
+            const loggerLevel = document.createElement('span')
+            loggerLevel.classList.add(this.#logRecordLevel)
+            loggerLevel.innerText = LogLevel[logRecord.level]
+            html.append(loggerLevel)
         }
 
-        let logRecordHtml = htmlEscape(logRecord.message);
-        let recordHTML = document.createElement('span');
-        recordHTML.classList.add(this.#logRecordMessage);
-        recordHTML.append(logRecordHtml);
+        const logRecordHtml = htmlEscape(logRecord.message)
+        const recordHTML = document.createElement('span')
+        recordHTML.classList.add(this.#logRecordMessage)
+        recordHTML.append(logRecordHtml)
     
         // Combine both pieces of HTML and, if needed, append a final newline.
-        html.append(recordHTML, document.createElement('br'));
-        html.classList.add(this.css.logRecordContainer, className);
+        html.append(recordHTML, document.createElement('br'))
+        html.classList.add(this.css.logRecordContainer, className)
 
-        return html;
+        return html
     }
 }
 
