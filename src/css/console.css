@@ -6,6 +6,14 @@
 .debug-console-logger {
     position:relative;
     padding: 0;
+    height: 400px;
+    width: 100%;
+    overflow: scroll;
+    overflow-x: hidden;
+    overflow-y: scroll;
+    border: 1px solid #CCC;
+    background-color: #FCFCFC;
+    font: medium monospace;    
 }
 
 .debug-console-footer {

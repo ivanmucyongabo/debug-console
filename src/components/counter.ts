@@ -60,6 +60,7 @@ export class Counter extends Component implements ICounter {
     }
 
     setCount(count: number) {
+        console.log('setCount')
         const el = this.element
         if (el) {
             const countEl = document.getElementById(`${this.#countId_}`)

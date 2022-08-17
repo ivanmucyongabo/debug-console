@@ -132,7 +132,9 @@ export interface IToolBarConfig extends IComponentConfig {
     itemClassNames?: string[],
     /** Toolbar items. */
     items?: {
-        [key: string]: ToolBarItem[]
+        [key: string]: {
+            [key: string]: ToolBarItem
+        }
     },
     /** Classnames for toolbar groups. */
     groupClassNames?: string[]
@@ -150,7 +152,9 @@ export class ToolBar extends Component implements IToolBar {
     #itemClassNames_: string[]
     #groupClassNames_: string[]
     #items_: {
-        [key: string]: ToolBarItem[]
+        [key: string]: {
+            [key: string]: ToolBarItem
+        }
     }
 
     constructor(config: IToolBarConfig) {
@@ -167,23 +171,23 @@ export class ToolBar extends Component implements IToolBar {
         }
     }
 
-    group(index: string): ToolBarItem[]|undefined {
+    group(index: string): {[key: string]: ToolBarItem}|undefined {
         return this.#items_[index]
     }
 
-    insert(group: string, item: ToolBarItem): boolean {
+    insert(group: string, label: string, item: ToolBarItem): boolean {
         let initialInsert = false
 
         if (!this.#items_[group]) {
             initialInsert = true
-            this.#items_[group] = []
+            this.#items_[group] = {}
         }
 
         if (!item.parent || item.parent !== this) {
             item.parent = this
         }
 
-        this.#items_[group].push(item)
+        this.#items_[group][label] = item
 
         return initialInsert
     }
@@ -203,7 +207,7 @@ export class ToolBar extends Component implements IToolBar {
         for(let i=0, groups=Object.keys(itemsCopy), group; group=groups[i]; i++) {
             const groupHTML = this.groupHTML(group)
 
-            for(let j=0, items=itemsCopy[group], item; item=items[j]; j++) {
+            for(let j=0, items=Object.values(itemsCopy[group]), item; item=items[j]; j++) {
                 const itemEl = item.render()
                 itemEl.classList.add(...this.#itemClassNames_)
                 groupHTML.append(itemEl)

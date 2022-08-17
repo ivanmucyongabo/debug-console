@@ -1,3 +1,7 @@
+/**
+ * @fileoverview Formatter for logging.
+ */
+
 import { LogLevel, LogRecord } from "./logger"
 import { Timer } from "./timer"
 

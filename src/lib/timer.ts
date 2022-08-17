@@ -1,3 +1,7 @@
+/**
+ * @fileoverview Simple timer.
+ */
+
 /** Class representing timer. */
 export class Timer {
     /**

@@ -1,5 +1,5 @@
 /**
- * @fileoverview Simple base component.
+ * @fileoverview Simple base ui component.
  */
 
 import camelCase from 'lodash.camelcase'

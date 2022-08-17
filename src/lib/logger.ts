@@ -1,3 +1,7 @@
+/**
+ * @fileoverview Basic logging definitions.
+ */
+
 const ROOT_LOG_NAME = ''
 const BUFFER_CAPACITY = 0
 
