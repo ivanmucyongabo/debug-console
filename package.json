@@ -1,47 +1,15 @@
 {
-  "name": "debug-ui",
+  "name": "@debug-ui/debug-console",
   "version": "1.0.0",
-  "description": "Simple ui components for logging to browser.",
+  "description": "Simple ui div console for logging to browser DOM.",
   "browser": "dist/index.bundle.js",
   "main": "dist/index.js",
   "types": "dist/dts/index.d.ts",
-  "scripts": {
-    "clean": "rimraf dist coverage demo",
-    "typecheck": "tsc -p . --noEmit",
-    "lint": "tslint --fix --project tsconfig.json --format stylish",
-    "start": "rollup --environment BUNDLE:true --config rollup.config.js --configDemo",
-    "test": "jest --coverage",
-    "test:watch": "jest --watch",
-    "posttest": "npm run typecheck && npm run lint",
-    "prebuild": "npm run clean",
-    "build": "npm-run-all --aggregate-output --parallel build:*",
-    "build:standalone": "rollup --environment BUNDLE:false --config rollup.config.js --sourcemap",
-    "build:esm": "rollup --environment ESM:true,BUNDLE:false --config rollup.config.js --sourcemap",
-    "build:bundle": "rollup --environment BUNDLE:true --config rollup.config.js --sourcemap",
-    "prepare": "npm run build",
-    "prepublishOnly": "npm run test",
-    "prerelease": "npm run test",
-    "release": "standard-version -p ember -i CHANGELOG.md -s -r 0",
-    "postrelease": "npm run version",
-    "version": "git add CHANGELOG.md package.json",
-    "postversion": "git push && git push --tags",
-    "commitmsg": "commitlint -E GIT_PARAMS",
-    "precommit": "lint-staged",
-    "postcommit": "git reset"
+  "dependencies": {
+    "lodash.camelcase": "^4.3.0",
+    "lodash.union": "^4.6.0",
+    "lodash.uniqueid": "^4.0.1"
   },
-  "keywords": [
-    "ui",
-    "debug",
-    "logger",
-    "typescript",
-    "lib",
-    "library"
-  ],
-  "files": [
-    "dist"
-  ],
-  "author": "Ivan Mucyo Ngabo",
-  "license": "MIT",
   "devDependencies": {
     "@babel/cli": "^7.18.9",
     "@babel/core": "^7.18.9",
@@ -79,10 +47,40 @@
     "tslint-config-prettier": "^1.18.0",
     "typescript": "^4.7.4"
   },
-  "dependencies": {
-    "lodash.camelcase": "^4.3.0",
-    "lodash.union": "^4.6.0",
-    "lodash.uniqueid": "^4.0.1"
+  "files": [
+    "dist"
+  ],
+  "keywords": [
+    "ui",
+    "debug",
+    "logger",
+    "typescript",
+    "lib",
+    "library"
+  ],
+  "scripts": {
+    "clean": "rimraf dist coverage demo",
+    "typecheck": "tsc -p . --noEmit",
+    "lint": "tslint --fix --project tsconfig.json --format stylish",
+    "start": "rollup --environment BUNDLE:true --config rollup.config.js --configDemo",
+    "test": "jest --coverage",
+    "test:watch": "jest --watch",
+    "posttest": "npm run typecheck && npm run lint",
+    "prebuild": "npm run clean",
+    "build": "npm-run-all --aggregate-output --parallel build:*",
+    "build:standalone": "rollup --environment BUNDLE:false --config rollup.config.js --sourcemap",
+    "build:esm": "rollup --environment ESM:true,BUNDLE:false --config rollup.config.js --sourcemap",
+    "build:bundle": "rollup --environment BUNDLE:true --config rollup.config.js --sourcemap",
+    "prepare": "npm run build",
+    "prepublishOnly": "npm run test",
+    "prerelease": "npm run test",
+    "release": "standard-version -p ember -i CHANGELOG.md -s -r 0",
+    "postrelease": "npm run version",
+    "version": "git add CHANGELOG.md package.json",
+    "postversion": "git push && git push --tags",
+    "commitmsg": "commitlint -E GIT_PARAMS",
+    "precommit": "lint-staged",
+    "postcommit": "git reset"
   },
   "lint-staged": {
     "linters": {
@@ -91,9 +89,15 @@
         "git add"
       ]
     }
-  },
+  },  
   "repository": {
     "type": "git",
-    "url": "https://github.com/ivanmucyongabo/debug-ui"
-  }
+    "url": "git+https://github.com/ivanmucyongabo/debug-console.git"
+  },
+  "author": "Ivan Mucyo Ngabo",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/ivanmucyongabo/debug-console/issues"
+  },
+  "homepage": "https://github.com/ivanmucyongabo/debug-console#readme"
 }
