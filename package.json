@@ -1,6 +1,6 @@
 {
   "name": "debug-ui",
-  "version": null,
+  "version": "1.0.0",
   "description": "Simple ui components for logging to browser.",
   "browser": "dist/index.bundle.js",
   "main": "dist/index.js",
