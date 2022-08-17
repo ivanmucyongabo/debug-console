@@ -1,6 +1,6 @@
 {
   "name": "debug-ui",
-  "version": "0.1.0",
+  "version": null,
   "description": "Simple ui components for logging to browser.",
   "browser": "dist/index.bundle.js",
   "main": "dist/index.js",
@@ -23,7 +23,7 @@
     "preversion": "npm run test",
     "version": "npm run changelog && git add CHANGELOG.md",
     "postversion": "git push && git push --tags",
-    "changelog": "conventional-changelog -p ember -i CHANGELOG.md -s -r 0",
+    "changelog": "standard-version -p ember -i CHANGELOG.md -s -r 0",
     "commitmsg": "commitlint -E GIT_PARAMS",
     "precommit": "lint-staged",
     "postcommit": "git reset"
