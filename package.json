@@ -1,6 +1,6 @@
 {
   "name": "@debug-ui/debug-console",
-  "version": "1.1.0",
+  "version": "1.1.1",
   "description": "Simple ui div console for logging to browser DOM.",
   "browser": "dist/index.bundle.js",
   "main": "dist/index.js",
