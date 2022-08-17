@@ -23,6 +23,11 @@ export interface IComboBoxConfig extends IComponentConfig {
 
 export interface IComboBox extends IComponent {}
 
+/**
+ * Class representing a combobox component.
+ * 
+ * @extends Component
+ */
 export class ComboBox extends Component implements IComboBox {
     name = 'combobox'
     #inputId_: string

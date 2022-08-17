@@ -20,6 +20,11 @@ export interface IToolBarAccordianConfig extends IAccordianConfig, IToolBarItemC
 export interface IToolBarCounterConfig extends ICounterConfig, IToolBarItemConfig {}
 export interface IToolBarButtonConfig extends IButtonConfig, IToolBarItemConfig {}
 
+/**
+ * Class representing toolbar combobox component.
+ * 
+ * @extends ComboBox
+ */
 export class ToolBarComboBox extends ComboBox implements IComboBox {
     #parent_?: ToolBar
     constructor(config: IToolBarComboBoxConfig) {
@@ -38,6 +43,12 @@ export class ToolBarComboBox extends ComboBox implements IComboBox {
         return html
     }
 }
+
+/**
+ * Class representing toolbar accordian component.
+ * 
+ * @extends Accordian
+ */
 export class ToolBarAccordian extends Accordian implements IAccordian {
     #parent_?: ToolBar
     constructor(config: IToolBarAccordianConfig) {
@@ -57,6 +68,12 @@ export class ToolBarAccordian extends Accordian implements IAccordian {
         return html
     }
 }
+
+/**
+ * Class representing toolbar counter component.
+ * 
+ * @extends Counter
+ */
 export class ToolBarCounter extends Counter implements ICounter {
     #parent_?: ToolBar
     constructor(config: IToolBarCounterConfig) {
@@ -76,6 +93,12 @@ export class ToolBarCounter extends Counter implements ICounter {
         return html
     }
 }
+
+/**
+ * Class representing toolbar button component.
+ * 
+ * @extends Button
+ */
 export class ToolBarButton extends Button implements IButton {
     #parent_?: ToolBar
 
@@ -101,16 +124,27 @@ export class ToolBarButton extends Button implements IButton {
 
 export type ToolBarItem = ToolBarComboBox|ToolBarAccordian|ToolBarCounter|ToolBarButton
 
+/**
+ * Configurable options for toolbar.
+ */
 export interface IToolBarConfig extends IComponentConfig {
+    /** Classnames for toolbar items. */
     itemClassNames?: string[],
+    /** Toolbar items. */
     items?: {
         [key: string]: ToolBarItem[]
     },
+    /** Classnames for toolbar groups. */
     groupClassNames?: string[]
 }
 
 export interface IToolBar extends IComponent {}
 
+/**
+ * Class representing toolbar component.
+ * 
+ * @extends Component
+ */
 export class ToolBar extends Component implements IToolBar {
     name = 'toolbar'
     #itemClassNames_: string[]

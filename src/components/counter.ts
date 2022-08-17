@@ -9,16 +9,29 @@ import { Component, IComponent, IComponentConfig } from './base'
 const DEFAULT_SEPERATOR = '-'
 const DEFAULT_TAGNAME = 'div'
 
+/**
+ * Configurable options for counter component.
+ */
 export interface ICounterConfig extends IComponentConfig {
-    label: string
-    min?: number
-    max?: number
-    countClassNames?: string[]
-    countId?: string
+    /** Label for HTML. */
+    label: string,
+    /** Min value for counter. */
+    min?: number,
+    /** Max value for counter. */
+    max?: number,
+    /** Classnames for count HTML. */
+    countClassNames?: string[],
+    /** ID for count HTML. */
+    countId?: string,
 }
 
 export interface ICounter extends IComponent {}
 
+/**
+ * Class representing counter component.
+ * 
+ * @extends Component
+ */
 export class Counter extends Component implements ICounter {
     name = 'counter'
     #countClassNames_: string[]

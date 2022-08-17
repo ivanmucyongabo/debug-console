@@ -22,6 +22,11 @@ export interface IButtonConfig extends IComponentConfig{
 
 export interface IButton extends IComponent {}
 
+/**
+ * Class representing button component.
+ * 
+ * @extends Component
+ */
 export class Button extends Component implements IButton {
     name = 'button'
     #label_: string

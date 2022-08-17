@@ -12,6 +12,11 @@ import { ToolBar, ToolBarAccordian, ToolBarButton, ToolBarComboBox, ToolBarCount
 
 const DEFAULT_SEPERATOR = '-'
 
+/**
+ * Class representing toolbar clear button component.
+ * 
+ * @extends ToolBarButton
+ */
 class ToolBarClearButton extends ToolBarButton {
   attachListeners() {
       super.attachListeners()
@@ -28,15 +33,27 @@ class ToolBarClearButton extends ToolBarButton {
   }
 }
 
+/**
+ * Configurable options for debug console component.
+ */
 export interface IDebugConsoleComponentConfig extends IComponentConfig {
+  /** HTML element to mount component to. */
   mountTo: HTMLElement|string|null,
+  /** Toolbar component. */
   toolbar?: ToolBar,
-  formatter?: Formatter
-  headerClassNames?: string[]
-  logClassNames?: string[]
-  footerClassNames?: string[]
-  headerId?: string
-  logId?: string
+  /** Formatter for log message formatting. */
+  formatter?: Formatter,
+  /** Classnames for header HTML. */
+  headerClassNames?: string[],
+  /** Classnames for log body HTML. */
+  logClassNames?: string[],
+  /** Classnames for footer HTML. */
+  footerClassNames?: string[],
+  /** ID for header HTML. */
+  headerId?: string,
+  /** ID for log body HTML. */
+  logId?: string,
+  /** ID for footer HTML. */
   footerId?: string
 }
 
@@ -49,6 +66,11 @@ export interface IDebugConsole extends IComponent {
   footerClassNames: string[]
 }
 
+/**
+ * Class representing debug console component.
+ * 
+ * @extends Component
+ */
 export class DebugConsole extends Component implements IDebugConsole {
   name = 'debug-console'
   #headerClassNames_: string[]

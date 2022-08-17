@@ -14,6 +14,11 @@ export interface IAccordianConfig extends IButtonConfig {
 
 export interface IAccordian extends IButton {}
 
+/**
+ * Class representing Accordian trigger component.
+ * 
+ * @extends Button
+ */
 export class Accordian extends Button implements IAccordian {
     name = 'accordian'
     #panelClassNames_: string[]

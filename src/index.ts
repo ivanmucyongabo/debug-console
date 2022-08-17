@@ -25,14 +25,33 @@ import { LogBuffer, LogLevel, LogRecord, LogRegistry, LogRegistryItem, Logger } 
 export const logRegistry = new LogRegistry()
 export const logBuffer = new LogBuffer()
 
+/**
+ * Returns an existing logger or creates one.
+ * 
+ * @param name - The name to use for the logger search or creation.
+ * @param level - The log level to use for logger creation.
+ * @returns The logger with the provided name and log level.
+ */
 const getLogger = (name: string, level?: LogLevel): LogRegistryItem => {
     return logRegistry.getLogger(name, level)
 }
 
+/**
+ * Returns all loggers.
+ * 
+ * @returns The loggers created.
+ */
 const getLoggers = (): LogRegistryItem[] => {
     return logRegistry.getLoggers()
 }
 
+/**
+ * Subscribe a handler to a logger, for logged messages.
+ * 
+ * @param logger - The logger to subscribe to.
+ * @param fn - The handler to call when messages are logged.
+ * @returns Boolean whether the handler was subscribe or not.
+ */
 const subscribe = (logger: Logger|string, fn: (l: LogRecord) => void): boolean => {
     if (logger) {
         logger = (logger as Logger).name || logger
@@ -43,6 +62,13 @@ const subscribe = (logger: Logger|string, fn: (l: LogRecord) => void): boolean =
     return false
 }
 
+/**
+ * Unsubscribes a handler from a logger.
+ * 
+ * @param logger - The logger to subscribe to.
+ * @param fn - The handler to call when messages are logged.
+ * @returns Boolean whether the handler was unsubscribe or not.
+ */
 const unsubscribe = (logger: Logger|string, fn: any): boolean => {
     if (logger) {
         logger = (logger as Logger).name || logger
@@ -53,6 +79,16 @@ const unsubscribe = (logger: Logger|string, fn: any): boolean => {
     return false
 }
 
+/**
+ * Log a message using a logger.
+ * 
+ * @remarks
+ * Debug is the default logging level.
+ * 
+ * @param logger - The logger to log to.
+ * @param level - The log level to use for the message type.
+ * @param msg - The message string to log.
+ */
 const log = (logger: Logger|string, level: LogLevel, msg: string): void => {
     if (logger) {
         logger = (logger as Logger).name || logger
@@ -66,24 +102,48 @@ const log = (logger: Logger|string, level: LogLevel, msg: string): void => {
     }
 }
 
+/**
+ * Log an informational level message.
+ * 
+ * @param logger - The logger to log to.
+ * @param msg - The message string to log.
+ */
 const info = (logger: string | Logger, msg: string): void => {
     if (logger) {
         log(logger, LogLevel.Info, msg)
     }
 }
 
+/**
+ * Log an error level message
+ * 
+ * @param logger - The logger to log to.
+ * @param msg - The message string to log.
+ */
 const error = (logger: string | Logger, msg: string): void => {
     if (logger) {
         log(logger, LogLevel.Error, msg)
     }
 }
 
+/**
+ * Log a debugging level message.
+ * 
+ * @param logger - The logger to log to.
+ * @param msg - The message string to log.
+ */
 const debug = (logger: string | Logger, msg: string): void => {
     if (logger) {
         log(logger, LogLevel.Debug, msg)
     }
 }
 
+/**
+ * Log a warning level message.
+ * 
+ * @param logger - The logger to log to.
+ * @param msg - The message string to log.
+ */
 const warning = (logger: string | Logger, msg: string): void => {
     if (logger) {
         log(logger, LogLevel.Warning, msg)

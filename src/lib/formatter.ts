@@ -1,30 +1,70 @@
 import { LogLevel, LogRecord } from "./logger"
 import { Timer } from "./timer"
 
+/**
+ * Escape whitespace from HTML string.
+ * 
+ * @todo Implement this function.
+ * 
+ * @param str - HTML string to escape.
+ * @returns Whitespace safe HTML string.
+ */
 const escapeWhitespace = (str: string): string => {
     return str
 }
+
+/**
+ * Convert newline to br element.
+ * 
+ * @todo Implement this function.
+ * 
+ * @param str - HTML string to format.
+ * @returns Formated safe HTML string.
+ */
 const newLineToBr = (str: string): string => {
     return str
 }
+
+/**
+ * Escape HTML string and make it safer.
+ * 
+ * @todo Implement this function.
+ * 
+ * @param str - HTML string to format.
+ * @returns Safe HTML string.
+ */
 const htmlEscape = (str: string): string => {
     return str
 }
 
 export interface IFormatterConfig {
+    /** Classname for infomational log level message. */
     info?: string,
+    /** Classname for error log level message. */
     error?: string,
+    /** Classname for warning log level message. */
     warning?: string,
+    /** Classname for debug log level message. */
     debug?: string,
+    /** Classname for the message container. */
     logRecordContainer?: string,
+    /** Classname for the message timestamp. */
     logRecordTimestamp?: string,
+    /** Classname for the message name. */
     logRecordName?: string,
+    /** Classname for the message log level. */
     logRecordLevel?: string,
+    /** Classname for the message string. */
     logRecordMessage: string,
+    /** Custom label to prefix to message classnames. */
     prefix?: string,
+    /** Whether to show the timestamp of when the message logged. */
     showAbsoluteTime?: boolean,
+    /** Whether to show the timestamp relative to the logger. */
     showRelativeTime?: boolean,
+    /** Whether to show the logger name. */
     showLoggerName?: boolean,
+    /** Whether to show the message log level. */
     showSeverityLevel?: boolean  
 }
 
@@ -35,23 +75,102 @@ export interface IFormatter {
     formatAsHtml(logRecord: LogRecord): HTMLElement
 }
 
+/** Class representing formatter. */
 export class Formatter {
+    /**
+     * @private
+     */
     #timer: Timer
+    /**
+     * Whether to show the timestamp of when the message logged.
+     * 
+     * @private
+     */
     #showAbsoluteTime: boolean
+    /**
+     * Whether to show the timestamp relative to the logger.
+     * 
+     * @private
+     */
     #showRelativeTime: boolean
+    /**
+     * Whether to show the logger name.
+     * 
+     * @private
+     */
     #showLoggerName: boolean
+    /**
+     * Whether to show the message log level.
+     * 
+     * @private
+     */
     #showSeverityLevel: boolean
+    /**
+     * Classname for infomational log level message.
+     * 
+     * @private
+     */
     #info: string
+    /**
+     * Classname for error log level message.
+     * 
+     * @private
+     */
     #error: string
+    /**
+     * Classname for warning log level message.
+     * 
+     * @private
+     */
     #warning: string
+    /**
+     * Classname for debug log level message.
+     * 
+     * @private
+     */
     #debug: string
+    /**
+     * Classname for the message container.
+     * 
+     * @private
+     */
     #logRecordContainer: string
+    /**
+     * Classname for the message timestamp.
+     * @private
+     */
     #logRecordTimestamp: string
+    /**
+     * Classname for the message name.
+     * 
+     * @private
+     */
     #logRecordName: string
+    /**
+     * Classname for the message log level.
+     * 
+     * @private
+     */
     #logRecordLevel: string
+    /**
+     * Classname for the message string.
+     * 
+     * @private
+     */
     #logRecordMessage: string
+    /**
+     * Custom label to prefix to message classnames.
+     * 
+     * @private
+     */
     #prefix: string
 
+    /**
+     * Creates a formatter for loggers.
+     * Creates and styles the HTML for the logged messages.
+     * 
+     * @param config - Configurable options for the formatter.
+     */
     constructor(config?: IFormatterConfig) {
         this.#timer = new Timer()
         this.#showAbsoluteTime = config?.showAbsoluteTime || true
@@ -105,6 +224,11 @@ export class Formatter {
         this.#showSeverityLevel = show
     }
 
+    /**
+     * Returns all classnames for the formatter.
+     * 
+     * @returns A dictionary of all classnames.
+     */
     get css() {
         return {
             info: this.#info,
@@ -119,6 +243,12 @@ export class Formatter {
         }
     }
 
+    /**
+     * Formats log record timestamp.
+     * 
+     * @param logRecord - Log record to use for timestamp format. 
+     * @returns Log record formatted timestamp.
+     */
     getDateTimeStamp(logRecord: LogRecord): string {
         const time = new Date(logRecord.timestamp)
         const date = `${(time.getMonth() + 1)}/${time.getDate()}/${(time.getFullYear() - 2000)}`
@@ -126,6 +256,13 @@ export class Formatter {
         return `${date} ${time.getHours()}:${time.getMinutes()}:${time.getSeconds()}.${Math.floor(time.getMilliseconds() / 10)}`
     }
 
+    /**
+     * Formats log record relative timestamp.
+     * 
+     * @param logRecord - Log record to use for timestamp format.
+     * @param timestamp - Initial timestamp to reference.
+     * @returns Log record formatted relative timestamp.
+     */
     getRelativeTimestamp(logRecord: LogRecord, timestamp: number): string {
         const ms = logRecord.timestamp - timestamp
         let sec = ms / 1000
@@ -149,10 +286,22 @@ export class Formatter {
         return `${str} s`
     }
 
+    /**
+     * Returns formatted log record HTML string.
+     * 
+     * @param logRecord - Log record to use for HTML data.
+     * @returns Formatted log record HTML string
+     */
     format(logRecord: LogRecord): string {
         return this.formatAsHtml(logRecord).outerHTML
     }
 
+    /**
+     * Create HTML for log record.
+     * 
+     * @param logRecord - Log record to use for HTML data.
+     * @returns Formatted log record HTMLElement
+     */
     formatAsHtml(logRecord: LogRecord): HTMLElement {
         if (!logRecord) {
             return document.createElement('div')

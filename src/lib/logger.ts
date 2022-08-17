@@ -1,20 +1,39 @@
 const ROOT_LOG_NAME = ''
 const BUFFER_CAPACITY = 0
 
+/**
+ * Enum for log levels.
+ * @readonly
+ * @enum {number}
+ */
 export enum LogLevel {
+    /** The off option */
     Off,
+    /** The debug level */
     Debug,
+    /** The informational level */
     Info,
+    /** The warning level */
     Warning,
+    /** The error level */
     Error
 }
 
+/** Class representing log record. */
 export class LogRecord {
     #level: LogLevel
     #msg: string
     #name: string
     #timer: number
 
+    /**
+     * Create a LogRecord.
+     * 
+     * @param level - LogLevel to use.
+     * @param msg - Message string to log.
+     * @param name - Name to use for log record.
+     * @param time - Timestamp of log record.
+     */
     constructor(level: LogLevel, msg: string, name: string, time?: number) {
         this.#level = level
         this.#msg = msg
@@ -38,7 +57,18 @@ export class LogRecord {
         this.#timer = time
     }
 
-    reset(level: LogLevel, msg: string, name: string, timestamp?: number, time?: number) {
+    /**
+     * Reset log record to new values.
+     * 
+     * @remarks
+     * If no timestamp is provided, Date.now() is the default.
+     * 
+     * @param level - LogLevel to use.
+     * @param msg - Message string to log.
+     * @param name - Name to use for log record.
+     * @param timestamp - Timestamp of log record.
+     */
+    reset(level: LogLevel, msg: string, name: string, timestamp?: number) {
         this.#level = level
         this.#msg = msg
         this.#name = name
@@ -46,9 +76,15 @@ export class LogRecord {
     }
 }
 
+/** Class representing a logger. */
 export class Logger {
     #name: string
 
+    /**
+     * Create a Logger.
+     * 
+     * @param name - Name to use the logger.
+     */
     constructor(name: string) {
         this.#name = name
     }
@@ -58,11 +94,18 @@ export class Logger {
     }
 }
 
+/** Class representing a log registry item. */
 export class LogRegistryItem {
     #logger: Logger
     #level: LogLevel
     #handlers: ((record: LogRecord) => void)[]
 
+    /**
+     * Create a log registry item.
+     * 
+     * @param name - Log registry item name.
+     * @param level - Log level of log registry item.
+     */
     constructor(name: string, level?: LogLevel) {
         this.#logger = new Logger(name)
         this.#level = level || LogLevel.Debug
@@ -87,9 +130,20 @@ export class LogRegistryItem {
         return this.#handlers.length
     }
 
+    /**
+     * Subscribe handler to logger.
+     * 
+     * @param fn 
+     */
     subscribe(fn: (record: LogRecord) => void) {
         this.#handlers.push(fn)
     }
+
+    /**
+     * Unsubscribe handler from logger.
+     * 
+     * @param fn 
+     */
     unsubscribe(fn: (record: LogRecord) => void) {
         this.#handlers = this.#handlers.filter(
             (item) => {
@@ -99,6 +153,12 @@ export class LogRegistryItem {
             }
         )
     }
+
+    /**
+     * Run all subscribed handlers.
+     * 
+     * @param record - Log record to publish.
+     */
     fire(record: LogRecord) {
         this.#handlers.forEach(handler => {
             handler(record)
@@ -106,6 +166,7 @@ export class LogRegistryItem {
     }
 }
 
+/** Class representing a registry of log items. */
 export class LogRegistry {
     #items: {
         [key: string]: LogRegistryItem
@@ -120,6 +181,13 @@ export class LogRegistry {
         return Object.values(this.#items).length
     }
 
+    /**
+     * Get or create LogRegistryItem by name.
+     * 
+     * @param name - Name to search for log.
+     * @param level - Log level 
+     * @returns LogRegistryItem
+     */
     getLogger(name: string, level?: LogLevel): LogRegistryItem {
         const item = this.#items[name]
         if (item) {
@@ -141,12 +209,19 @@ export class LogRegistry {
           return logRegistryEntry
         }
     }
+
+    /**
+     * Get all LogRegistryItems.
+     * 
+     * @returns All LogRegistryItems
+     */
     getLoggers(): LogRegistryItem[] {
         return Object.keys(this.#items)
         .map(loggerName => this.#items[loggerName])
     }
 }
 
+/** Class representing log buffer. */
 export class LogBuffer {
     #capacity: number
     #buffer: LogRecord[]
