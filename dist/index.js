@@ -1,5 +1,5 @@
 /*!
-  * Debug UI v1.0.0 (https://github.com/ivanmucyongabo/debug-console#readme)
+  * Debug UI v1.1.1 (https://github.com/ivanmucyongabo/debug-console#readme)
   * Copyright 2021-2022 Ivan Mucyo Ngabo
   * Licensed under MIT (https://github.com/ivanmucyongabo/debug-ui/blob/main/LICENSE)
   */

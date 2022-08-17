@@ -18,7 +18,7 @@ With the download you'll find the following directoryies and files, with both co
     <summary>Download contents</summary>
 
     ```text
-    debug-ui/
+    debug-console/dist/
     ├── index.css
     ├── index.bundle.js
     ├── index.bundle.js.map
@@ -43,7 +43,7 @@ The components use a simple logging API:
 Optional CSS file
 **css**
 ```css
-@import "@debug-ui/debug-console/css/index.css
+@import "@debug-ui/debug-console/dist/index.css
 ```
 
 **node**
@@ -138,4 +138,4 @@ Property              | Purpose
 
 ## Copyright and license
 
-Code copyright 2021–2022. Code released under the [MIT License](https://github.com/ivanmucyongabo/debug-ui/blob/main/LICENSE).
+Code copyright 2021–2022. Code released under the [MIT License](https://github.com/ivanmucyongabo/debug-console/blob/main/LICENSE).
