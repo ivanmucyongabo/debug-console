@@ -57,9 +57,11 @@ debugConsole.open();
 // OR
 debugConsole.open(document.getElementById('someElementInTheDOM'));
 
-suscribe('example', (record) => debugConsole.log(record));
+suscribe('loggerA', (record) => debugConsole.log(record));
+suscribe('loggerB', (record) => debugConsole.log(record));
 
-debug('example', 'example log');
+debug('loggerA', 'example log A');
+debug('loggerB', 'example log B');
 ```
 
 **browser**
