@@ -5,7 +5,7 @@ Simple UI components for debugging and logging.
 ## Installation
 
 ```
-npm install debug-ui
+npm install @debug-ui/debug-console
 ```
 
 If you want to use the default styles, you need to import styles explicitly.
@@ -43,13 +43,13 @@ The components use a simple logging API:
 Optional CSS file
 **css**
 ```css
-@import "debug-ui/css/index.css
+@import "@debug-ui/debug-console/css/index.css
 ```
 
 **node**
 app.js/app.ts
 ```js
-import { debug, subscribe, unsubscribe, DebugConsole } from 'debug-ui';
+import { debug, subscribe, unsubscribe, DebugConsole } from '@debug-ui/debug-console';
 
 let debugConsole = new DebugConsole(document.getElementById('someElementInTheDOM'));
 
@@ -71,7 +71,7 @@ indext.html
 <html lang="en">
   <head>
     <meta charset="utf-8">
-    <script src="debug-ui/index.bundle.js"></script>
+    <script src="@debug-ui/debug-console/dist/index.bundle.js"></script>
   </head>
   <body>
     <div id="example"></div>

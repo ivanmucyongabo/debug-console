@@ -89,7 +89,7 @@
         "git add"
       ]
     }
-  },  
+  },
   "repository": {
     "type": "git",
     "url": "git+https://github.com/ivanmucyongabo/debug-console.git"
