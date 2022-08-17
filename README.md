@@ -19,8 +19,7 @@ With the download you'll find the following directoryies and files, with both co
 
     ```text
     debug-ui/
-    ├── css/
-    │   └──  index.css
+    ├── index.css
     ├── index.bundle.js
     ├── index.bundle.js.map
     ├── index.bundle.min.js
