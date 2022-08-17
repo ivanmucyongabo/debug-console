@@ -1,35 +1,35 @@
 /* Toolbar */
-[role="toolbar"] {
+[role='toolbar'] {
   min-height: 40px;
   background: none;
-  border-width: 0!important;
+  border-width: 0 !important;
   display: inline;
   padding: 0;
   margin-bottom: 0;
   outline: 0;
   border-top: 1px solid #e5e5e5;
-  border-bottom: 1px solid #ebebeb;  
+  border-bottom: 1px solid #ebebeb;
 }
 
-[role="toolbar"].focus {
+[role='toolbar'].focus {
 }
 
-[role="toolbar"] .group {
+[role='toolbar'] .group {
   display: block;
   float: left;
 }
 
-[role="toolbar"] .group:not(:first-child) {
+[role='toolbar'] .group:not(:first-child) {
   margin-left: 0.75em;
 }
 
-[role="toolbar"] button,
-[role="toolbar"] [role="radio"],
-[role="toolbar"] label,
-[role="toolbar"] .combobox,
-[role="toolbar"] a,
-[role="toolbar"] .toolbar-item,
-[role="toolbar"] .input {
+[role='toolbar'] button,
+[role='toolbar'] [role='radio'],
+[role='toolbar'] label,
+[role='toolbar'] .combobox,
+[role='toolbar'] a,
+[role='toolbar'] .toolbar-item,
+[role='toolbar'] .input {
   outline: none;
   display: inline-block;
   text-align: center;
@@ -38,7 +38,7 @@
   margin-right: 0.25em;
 }
 
-[role="toolbar"] button .popup-label {
+[role='toolbar'] button .popup-label {
   display: block;
   width: initial;
   position: absolute;
@@ -46,69 +46,68 @@
   font-weight: normal;
 }
 
-[role="toolbar"] button .popup-label.show {
+[role='toolbar'] button .popup-label.show {
   text-align: center;
   top: -2.5em;
 }
 
-[role="toolbar"] button .popup-label::after,
-[role="toolbar"] button .popup-label::before {
+[role='toolbar'] button .popup-label::after,
+[role='toolbar'] button .popup-label::before {
   top: 100%;
   left: 50%;
   border: solid transparent;
-  content: " ";
+  content: ' ';
   height: 0;
   width: 0;
   position: absolute;
   pointer-events: none;
 }
 
-[role="toolbar"] button .popup-label::after {
+[role='toolbar'] button .popup-label::after {
   border-width: 10px;
   margin-left: -10px;
 }
 
-[role="toolbar"] button .popup-label::before {
+[role='toolbar'] button .popup-label::before {
   border-width: 12px;
   margin-left: -12px;
 }
 
-[role="toolbar"] button svg {
+[role='toolbar'] button svg {
   margin: 0.15em auto -0.15em;
   height: 1em;
   width: 1em;
   pointer-events: none;
 }
 
-[role="toolbar"] button[aria-disabled="true"] {
+[role='toolbar'] button[aria-disabled='true'] {
   font-weight: bold;
-
 }
 
-[role="toolbar"] button[aria-disabled="true"] {
+[role='toolbar'] button[aria-disabled='true'] {
   cursor: not-allowed;
 }
 
-[role="toolbar"] button[aria-disabled="true"]:focus {
+[role='toolbar'] button[aria-disabled='true']:focus {
 }
 
-[role="toolbar"] button::-moz-focus-inner {
+[role='toolbar'] button::-moz-focus-inner {
   border: 0;
 }
 
-[role="toolbar"] button:focus,
-[role="toolbar"] [role="radio"]:focus,
-[role="toolbar"] .focus,
-[role="toolbar"] a:focus {
+[role='toolbar'] button:focus,
+[role='toolbar'] [role='radio']:focus,
+[role='toolbar'] .focus,
+[role='toolbar'] a:focus {
 }
 
-[role="toolbar"] button:hover,
-[role="toolbar"] [role="radio"]:hover,
-[role="toolbar"] label.input:hover,
-[role="toolbar"] a:hover {
+[role='toolbar'] button:hover,
+[role='toolbar'] [role='radio']:hover,
+[role='toolbar'] label.input:hover,
+[role='toolbar'] a:hover {
 }
 
-[role="toolbar"] button[aria-pressed="true"],
-[role="toolbar"] [role="radio"][aria-checked="true"] {
+[role='toolbar'] button[aria-pressed='true'],
+[role='toolbar'] [role='radio'][aria-checked='true'] {
   font-weight: bold;
 }

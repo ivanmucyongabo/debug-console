@@ -1,62 +1,62 @@
 .debug-console-header {
-    position:relative;
-    overflow: hidden;
+  position: relative;
+  overflow: hidden;
 }
 
 .debug-console-logger {
-    position:relative;
-    padding: 0;
-    height: 400px;
-    width: 100%;
-    overflow: scroll;
-    overflow-x: hidden;
-    overflow-y: scroll;
-    border: 1px solid #CCC;
-    background-color: #FCFCFC;
-    font: medium monospace;    
+  position: relative;
+  padding: 0;
+  height: 400px;
+  width: 100%;
+  overflow: scroll;
+  overflow-x: hidden;
+  overflow-y: scroll;
+  border: 1px solid #ccc;
+  background-color: #fcfcfc;
+  font: medium monospace;
 }
 
 .debug-console-footer {
-    position:relative;
+  position: relative;
 }
 
 .debug-console-log-record {
-    padding: 6px 12px;
-    font: 8px;
+  padding: 6px 12px;
+  font: 8px;
 }
 
 .debug-console-log-record-timestamp {
-    margin-right: 0.25em;
+  margin-right: 0.25em;
 }
 
 .debug-console-log-record-name {
-    margin-right: 0.25em;
-    font-weight: 500;
+  margin-right: 0.25em;
+  font-weight: 500;
 }
 
 .debug-console-log-record-level {
-    margin-right: 0.25em;
+  margin-right: 0.25em;
 }
 
 .debug-console-log-record-message {
 }
 
 .debug-console-log-record.debug-console-log-record--error {
-    background-color: #ffebee;
-    color: #ff3d00;
+  background-color: #ffebee;
+  color: #ff3d00;
 }
 
 .debug-console-log-record.debug-console-log-record--info {
-    background-color: #e1f5fe;
-    color: #2962ff;
+  background-color: #e1f5fe;
+  color: #2962ff;
 }
 
 .debug-console-log-record.debug-console-log-record--warning {
-    background-color: #ffecb3;
-    color: #212121;
+  background-color: #ffecb3;
+  color: #212121;
 }
 
 .debug-console-log-record.debug-console-log-record--debug {
-    background-color: #f8f9fa;
-    color:#212121;
+  background-color: #f8f9fa;
+  color: #212121;
 }

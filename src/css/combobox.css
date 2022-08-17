@@ -36,11 +36,11 @@
   color: rgb(0 90 156);
 }
 
-.combobox button[aria-expanded="true"] svg {
+.combobox button[aria-expanded='true'] svg {
   transform: rotate(180deg) translate(0, -3px);
 }
 
-ul[role="listbox"] {
+ul[role='listbox'] {
   margin: 0;
   padding: 0;
   position: absolute;
@@ -59,7 +59,7 @@ ul[role="listbox"] {
   cursor: pointer;
 }
 
-ul[role="listbox"] li[role="option"] {
+ul[role='listbox'] li[role='option'] {
   margin: 0;
   display: block;
   padding-left: 3px;

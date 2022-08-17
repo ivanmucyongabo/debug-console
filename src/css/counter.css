@@ -1,39 +1,39 @@
 .counter {
-    min-width: 2.1em;
-    font-size: 0.6rem;
-    text-align: center;
-    background: #f8f9fa;
-    color: #212121;
-    padding: 1px 6px;
-    margin: 0rem;
-    border: 1px outset #212121;
-    border-radius: 2px;
+  min-width: 2.1em;
+  font-size: 0.6rem;
+  text-align: center;
+  background: #f8f9fa;
+  color: #212121;
+  padding: 1px 6px;
+  margin: 0rem;
+  border: 1px outset #212121;
+  border-radius: 2px;
 }
 
 .counter .counter-count {
-    margin-left: 0.25em;
+  margin-left: 0.25em;
 }
 
 .counter.counter--debug {
-    background: #f8f9fa;
-    color: #212121;
+  background: #f8f9fa;
+  color: #212121;
 }
 
 .counter.counter--info {
-    background: #039be5;
-    color: #fefefe;
+  background: #039be5;
+  color: #fefefe;
 }
 
 .counter.counter--warning {
-    background: #fbc02d;
-    color: #0a0a0a;
+  background: #fbc02d;
+  color: #0a0a0a;
 }
 
 .counter.counter--error {
-    background: #c62828;
-    color: #fefefe;
+  background: #c62828;
+  color: #fefefe;
 }
 
 .counter .counter-count {
-    font-style: bold;
+  font-style: bold;
 }

@@ -13,77 +13,76 @@ const DEFAULT_TAGNAME = 'div'
  * Configurable options for counter component.
  */
 export interface ICounterConfig extends IComponentConfig {
-    /** Label for HTML. */
-    label: string,
-    /** Min value for counter. */
-    min?: number,
-    /** Max value for counter. */
-    max?: number,
-    /** Classnames for count HTML. */
-    countClassNames?: string[],
-    /** ID for count HTML. */
-    countId?: string,
+  /** Label for HTML. */
+  label: string
+  /** Min value for counter. */
+  min?: number
+  /** Max value for counter. */
+  max?: number
+  /** Classnames for count HTML. */
+  countClassNames?: string[]
+  /** ID for count HTML. */
+  countId?: string
 }
 
 export interface ICounter extends IComponent {}
 
 /**
  * Class representing counter component.
- * 
+ *
  * @extends Component
  */
 export class Counter extends Component implements ICounter {
-    name = 'counter'
-    #countClassNames_: string[]
-    #countId_: string
-    #label_: string
+  name = 'counter'
+  #countClassNames_: string[]
+  #countId_: string
+  #label_: string
 
-    #count_: number
+  #count_: number
 
-    constructor(config: ICounterConfig) {
-        config.tagName = config.tagName || DEFAULT_TAGNAME
-        super(config)
-        this.#count_ = 0
+  constructor(config: ICounterConfig) {
+    config.tagName = config.tagName || DEFAULT_TAGNAME
+    super(config)
+    this.#count_ = 0
 
-        this.#label_ = config.label
-        this.#countId_ = config.countId || `${this.name}${DEFAULT_SEPERATOR}${'count'.concat(this.id)}`
-        this.#countClassNames_ = union(config.countClassNames||[], [`${this.name}${DEFAULT_SEPERATOR}count`])
-        this.classNames = union(this.classNames, [this.name])
+    this.#label_ = config.label
+    this.#countId_ = config.countId || `${this.name}${DEFAULT_SEPERATOR}${'count'.concat(this.id)}`
+    this.#countClassNames_ = union(config.countClassNames || [], [`${this.name}${DEFAULT_SEPERATOR}count`])
+    this.classNames = union(this.classNames, [this.name])
+  }
+
+  get count() {
+    return this.#count_
+  }
+  set count(count: number) {
+    this.#count_ = count
+    this.setCount(this.#count_)
+  }
+
+  setCount(count: number) {
+    console.log('setCount')
+    const el = this.element
+    if (el) {
+      const countEl = document.getElementById(`${this.#countId_}`)
+      countEl!.innerText = count.toString()
     }
+  }
 
-    get count() {
-        return this.#count_
-    }
-    set count(count: number) {
-        this.#count_ = count
-        this.setCount(this.#count_)
-    }
+  increment(delta: number) {
+    const oldCount = this.#count_
+    this.count = oldCount + delta
+  }
 
-    setCount(count: number) {
-        console.log('setCount')
-        const el = this.element
-        if (el) {
-            const countEl = document.getElementById(`${this.#countId_}`)
-            countEl!.innerText = count.toString()
-        }
-    }
-    
+  renderAsHTML(): HTMLElement {
+    const html = super.renderAsHTML()
 
-    increment(delta: number) {
-        const oldCount = this.#count_
-        this.count = oldCount + delta
-    }
+    const count = document.createElement('span')
+    count.classList.add(...this.#countClassNames_)
+    count.setAttribute('id', this.#countId_)
+    count.innerText = this.#count_.toString()
 
-    renderAsHTML(): HTMLElement {
-        const html = super.renderAsHTML()
+    html.append(this.#label_, count)
 
-        const count = document.createElement('span')
-        count.classList.add(...this.#countClassNames_)
-        count.setAttribute('id', this.#countId_)
-        count.innerText = this.#count_.toString()
-
-        html.append(this.#label_, count)
-
-        return html
-    }
+    return html
+  }
 }

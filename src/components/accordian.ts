@@ -7,36 +7,36 @@ import union from 'lodash.union'
 import { Button, IButton, IButtonConfig } from './button'
 
 export interface IAccordianConfig extends IButtonConfig {
-    panelClassNames?: string[]
-    panelId?: string
-    panel: string    
+  panelClassNames?: string[]
+  panelId?: string
+  panel: string
 }
 
 export interface IAccordian extends IButton {}
 
 /**
  * Class representing Accordian trigger component.
- * 
+ *
  * @extends Button
  */
 export class Accordian extends Button implements IAccordian {
-    name = 'accordian'
-    #panelClassNames_: string[]
-    #panelId_: string
-    constructor(config: IAccordianConfig) {
-        super(config)
+  name = 'accordian'
+  #panelClassNames_: string[]
+  #panelId_: string
+  constructor(config: IAccordianConfig) {
+    super(config)
 
-        this.#panelId_ = config.panelId || ''
-        this.#panelClassNames_ = union(config.panelClassNames||[], [])
-    }
+    this.#panelId_ = config.panelId || ''
+    this.#panelClassNames_ = union(config.panelClassNames || [], [])
+  }
 
-    render() {
-        const html = super.render()
+  render() {
+    const html = super.render()
 
-        const panel = document.createElement('div')
-        panel.setAttribute('id', this.#panelId_)
-        panel.classList.add(...this.#panelClassNames_)
+    const panel = document.createElement('div')
+    panel.setAttribute('id', this.#panelId_)
+    panel.classList.add(...this.#panelClassNames_)
 
-        return html
-    }
+    return html
+  }
 }
